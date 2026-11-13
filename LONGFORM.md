@@ -68,13 +68,13 @@ Run the PLAYBOOK self-check gate on the whole script and the cold open; write `"
    `ffmpeg -y -i renders/joined.mp4 -vf unsharp=5:5:0.6:5:5:0 -c:v libx264 -preset fast -b:v <k>k -pass 1 -an -f mp4 /dev/null` then
    `ffmpeg -y -i renders/joined.mp4 -vf unsharp=5:5:0.6:5:5:0 -c:v libx264 -preset fast -b:v <k>k -pass 2 -af loudnorm=I=-14:TP=-1.5:LRA=11 -c:a aac -b:a 160k -movflags +faststart renders/<slug>-long.mp4`.
 
-## 6. Thumbnail (1280x720, must make people click)
-Grab 12 candidate frames across the video, look at them together, and pick the most dramatic: a big face with a strong
-emotion next to the key object, bright, with the important part in the **top 55%** (the banner covers the bottom-centre
-caption zone). Then
-designed 16:9 thumbnail exactly as PLAYBOOK step 7 (hero object centre, big face left third, two lines right): `cp compile/thumbkit/thumb.html thumb.html`, edit the DESIGN block, `bash compile/thumbkit/render.sh . thumb.html renders/thumb-long.jpg long` (example: thumbs/designs/desert-water-long.html).
-Text: 2 short lines, curiosity not a summary ("HE SOLD THE / EIFFEL TOWER", "SHE VANISHED / FOR 11 DAYS"), 14 characters
-max each. Check it at 320 px wide before using it.
+## 6. Thumbnail (1280x720, designed, must make people click)
+Design it exactly as PLAYBOOK step 7, 16:9 layout: the hero object in the centre with glow, rays and sparkles, the
+main character's big face in the left third looking at it, two huge lines in the right column (line 1 white with a
+glow, line 2 yellow), a small type sticker bottom-right. `cp compile/thumbkit/thumb.html thumb.html`, edit the DESIGN
+block, `bash compile/thumbkit/render.sh . thumb.html renders/thumb-long.jpg long`. Example to match:
+`thumbs/designs/desert-water-long.html` ("ICE COLD / NO ICE?!"). Check `renders/thumb-long_small.jpg` (320 px): both
+lines readable, the emotion and the object clear in one second. Text: curiosity, not a summary, 14 characters max a line.
 
 ## 7. Publish (PLAYBOOK step 9 with these values)
 - Relay folder `videos/<YYYY-MM-DD>-<slug>-long/` (same single-commit push), Drive `new_name`
