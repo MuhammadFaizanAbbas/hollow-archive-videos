@@ -1,0 +1,185 @@
+{
+ "title": "Mars Base 7, Part 4: Channel Three",
+ "type": "SCIFI",
+ "series": "Mars Base 7",
+ "part": 4,
+ "sol": 4,
+ "gate": "7/7",
+ "lead": 0.1,
+ "outro": 0.8,
+ "gap": 0.1,
+ "music": "tension",
+ "ambience": [
+  {
+   "type": "night",
+   "from": 0,
+   "to": 92,
+   "gain": 0.6
+  }
+ ],
+ "cast": {
+  "INES": {
+   "voice": "af_nicole",
+   "speed": 1.05,
+   "color": "#2FB8A8"
+  },
+  "TOMAS": {
+   "voice": "am_michael",
+   "speed": 1.12,
+   "color": "#F28C28"
+  },
+  "MEI": {
+   "voice": "af_heart",
+   "speed": 1.02,
+   "color": "#4CAF50"
+  },
+  "PIP": {
+   "voice": "af_sky",
+   "speed": 1.25,
+   "color": "#F2C230"
+  },
+  "ATLAS": {
+   "voice": "bm_george",
+   "speed": 0.95,
+   "color": "#4AA8FF"
+  },
+  "LENA": {
+   "voice": "af_bella",
+   "speed": 0.98,
+   "color": "#C77DFF",
+   "fx": "radio"
+  }
+ },
+ "sources": [
+  "NASA, Multi-Mission Radioisotope Thermoelectric Generator: plutonium-238 has a half-life of about 87.7 years, so radioisotope power fades very slowly",
+  "Characters, bases and events are fictional (SCIFI series)"
+ ],
+ "lines": [
+  {
+   "sp": "INES",
+   "text": "A base that died twenty years ago just called us."
+  },
+  {
+   "sp": "INES",
+   "text": "Previously: Pip carries the memory of an old rover."
+  },
+  {
+   "sp": "INES",
+   "text": "And he told Mei she was late."
+  },
+  {
+   "sp": "ATLAS",
+   "text": "Oxygen reserve: seven sols."
+  },
+  {
+   "sp": "INES",
+   "text": "Base Seven log. Sol four."
+  },
+  {
+   "sp": "INES",
+   "text": "All night, Pip kept rolling to the radio."
+  },
+  {
+   "sp": "PIP",
+   "text": "Beep. Channel three. Three."
+  },
+  {
+   "sp": "TOMAS",
+   "text": "Channel three is dead. Nobody's used it in twenty years."
+  },
+  {
+   "sp": "INES",
+   "text": "Tomas tuned it anyway. Just static."
+  },
+  {
+   "sp": "INES",
+   "text": "Then, under the static, a woman."
+  },
+  {
+   "sp": "LENA",
+   "text": "Base Three, to any crew. Do you copy?"
+  },
+  {
+   "sp": "ATLAS",
+   "text": "Base Three. Last contact, twenty years ago. Crew declared lost."
+  },
+  {
+   "sp": "TOMAS",
+   "text": "Lost bases don't make calls, Commander."
+  },
+  {
+   "sp": "INES",
+   "text": "But that wasn't the strange part."
+  },
+  {
+   "sp": "ATLAS",
+   "text": "The signal is not from orbit. It comes from the canyon."
+  },
+  {
+   "sp": "ATLAS",
+   "text": "Twelve kilometres east."
+  },
+  {
+   "sp": "TOMAS",
+   "text": "Twenty years in the dark? What's still powering it?"
+  },
+  {
+   "sp": "ATLAS",
+   "text": "Base Three ran on plutonium."
+  },
+  {
+   "sp": "ATLAS",
+   "text": "It loses half its power only every eighty-eight years."
+  },
+  {
+   "sp": "INES",
+   "text": "I keyed the mic."
+  },
+  {
+   "sp": "INES",
+   "text": "Base Three, this is Commander Okafor. Who is with you?"
+  },
+  {
+   "sp": "INES",
+   "text": "Static. Ten long seconds.",
+   "gap": 0.5
+  },
+  {
+   "sp": "LENA",
+   "text": "Tell the girl. Hiro knew she would come."
+  },
+  {
+   "sp": "TOMAS",
+   "text": "The girl? How does she know about Mei?"
+  },
+  {
+   "sp": "INES",
+   "text": "Mei didn't move. Her hands were shaking on the seed tin."
+  },
+  {
+   "sp": "LENA",
+   "text": "He said she would change the landing site. For him."
+  },
+  {
+   "sp": "TOMAS",
+   "text": "Mei. What does she mean, change the landing site?"
+  },
+  {
+   "sp": "INES",
+   "text": "Mei didn't answer. So I opened the flight log."
+  },
+  {
+   "sp": "ATLAS",
+   "text": "Oxygen reserve: six sols."
+  },
+  {
+   "sp": "INES",
+   "text": "Tomorrow, the log tells us what Mei did."
+  }
+ ],
+ "airAt": [
+  7,
+  85.5,
+  6
+ ]
+}
