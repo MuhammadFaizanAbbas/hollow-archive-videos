@@ -140,6 +140,17 @@ word and the reveal's number get the yellow highlight.
    sparkle`. Match them to the story (blizzard nights, rainy streets, dusty deserts, embers by a fire, confetti for the
    win, `flashback` for the "years earlier" part). Also light the 3D set to match (`mainStreet(E, { dusk: true })`,
    warm interior bulbs, moon or lantern lights).
+3a. **Art direction = the thumbnail style, moving.** Every shot is designed like those thumbnails:
+   - one focal point per shot (a face OR the hero object), framed big; everything else is quiet (dim, blurred by
+     distance, lower contrast). Characters fill at least a third of the frame in dialogue and reaction shots.
+   - the story's **hero object** is built as a proper prop with ink outlines and 1-2 proof details, and gets its own
+     reveal shot: aura glow + rays + sparkles (`FX.glow`, `FX.ring`, `weather: 'sparkle'`) on the reveal word.
+   - one colour story per video: hot vs cold, gold light vs night blue, warm vs danger red. Grade the build cooler or
+     darker and the reveal warm/gold so the contrast lands at the payoff.
+   - insert cards look like the thumbnails: one big drawing, a red/yellow tag with the number, nothing else.
+   - faces act big: shock with open mouth, sweat drops in danger, sly half-smile when someone knows the trick; eyes
+     always look at what matters in the shot.
+   - the first frame and the thumbnail share the same hero object, so the click and the video match.
 3. **Retention visuals** (these matter as much as the script):
    - **Frame 1 is the payoff image already in motion** (the frozen farm, the Eiffel Tower with a SOLD sign), never a
      slow establishing shot, never a black or title frame. 3 cuts in the first 3 s, a punch-in on the hook word.
@@ -180,20 +191,38 @@ word and the reveal's number get the yellow highlight.
    insert cards look hand-drawn and clean, no person seen edge-on, nobody floating, captions readable, every shot
    matches its line, sound effects land on their beats. Fix and re-check.
 
-## 7. Thumbnail (must make people tap)
-Grab 10 candidate frames (`ffmpeg -ss <t> -i renders/<slug>.mp4 -frames:v 1 review/c<t>.png` at 10%, 20% … 90%),
-look at them together, and pick the most tempting one:
-- a big face with a strong emotion (`shock`, `laugh`, `smug`) **or** the story's key object (crown, newspaper, ID card)
-- bright and colourful, with the important part in the **top 60%** (the banner covers y 1160-1560, where the burned-in
-  caption sits)
-Grab them caption-free and sharp: `SOFTWARE_GL=1 QS='&res=1&aa=2&nocap=1' node tools/capture.mjs frames review/c "<t1>,<t2>,…"`. Then
-`bash compile/thumb_short.sh review/c/t<t>.jpg "LINE ONE" "LINE TWO" renders/thumb.jpg "<STICKER>"`
-with STICKER `TRUE STORY` (TRUE), `GENIUS TRICK` (TRICK), `LEGEND` (LEGEND), `STORY TIME` (TALE) or `SCI-FI` (SCIFI)
-(yellow tilted banner with heavy text, line two in red, a red TRUE STORY sticker, the logo).
-Text formula: line one sets it up, line two is the shock, 13 characters max each, never just the title:
-"HE STOLE THE / KING'S CROWN", "IT RAINED / MEAT!", "WW2 ENDED. / HE DIDN'T.", "A DEAD MAN / FOOLED HITLER".
-Look at the result at small size (`convert renders/thumb.jpg -resize 200x review/small.jpg`) before using it:
-the words must be readable and the face clear.
+## 7. Thumbnail: designed, not a frame grab (the owner's favourite style)
+Never put a banner over a video frame again. Every thumbnail is **drawn** with `compile/thumbkit/thumb.html`
+(canvas + the same Toon characters as the video), like `thumbs/designs/tyres.html`, `radio-tomorrow.html` (Shorts)
+and `desert-water-long.html` (long). Read one of those first, it shows the level expected.
+
+**The formula: 1 hero object + 1 big face + 2 lines of text. Nothing else.**
+- **Hero object** = the impossible thing in the story, drawn big in the middle with ink outlines (the squashed tyre
+  hissing air, the radio with a TUESDAY newspaper flying out, the clay pot glowing ice-blue in the desert). Add
+  1-2 "proof" details on it: a gauge (`15 PSI`), a date (`TUE` on the dial), a burst (`PSSST!`), drops, frost, light.
+  It gets `K.aura` glow + `K.rays` + `K.sparkles` behind/around it so the eye lands there first.
+- **Big face** = the video's main character (same `look` colours, hat, extras as in shots.js), huge: on a Short it fills
+  the bottom third (`K.person(..., 230, 2760, 3.3)`), on a long video the left third. A strong emotion only:
+  `shock` + `talk: 0.85`, `sly` (he knows the trick), `laugh`, `worried` + sweat. Eyes look at the hero object.
+- **Two text lines**, 2-3 words each, huge, top on a Short / right column on a long video. Line 1 white with a soft
+  coloured glow, line 2 yellow `#FFD43B`. Line 1 states the impossible thing, line 2 is the twist or the question:
+  "FLAT TYRES / SAVED HIM?!", "TOMORROW'S / NEWS?!", "ICE COLD / NO ICE?!", "A DEAD BASE / JUST CALLED US.".
+  Never repeat the title word for word; never spoil the answer.
+- **Colour contrast does the work**: hot vs cold (orange desert + ice-blue pot; blizzard blue + red accents), or warm
+  gold light vs deep night blue. One dominant mood colour, one accent.
+- **Background**: a sky gradient or a caption-free frame (`K.photo('thumb_bg.jpg', …)` grabbed with
+  `QS='&res=1&aa=2&nocap=1&nohud=1'`) **blurred** (14 px) so it never competes. Weather on top if the story has it
+  (`D.weather = 'snow'`), then `K.vignette()`.
+- Small type sticker only (`TRUE STORY`, `GENIUS TRICK`, `LEGEND`, `STORY TIME`, `SCI-FI`); no logo, no yellow banner,
+  no text over the face. Series parts (Mars Base 7) keep their series layout: AIR pill, headline, PART pill.
+
+**How:** `cp compile/thumbkit/thumb.html thumb.html` in the project root, edit only the DESIGN block (`D` text/sticker/
+character, `background()`, `hero()`: draw the hero with canvas paths, gradients and the `K.*` helpers), then
+`bash compile/thumbkit/render.sh . thumb.html renders/thumb.jpg short` (`long` → 1280x720 `renders/thumb-long.jpg`).
+**QA like a designer:** open `renders/thumb_small.jpg` (phone size). Within one second you must read both lines, see
+the face's emotion and understand the hero object. Check nothing overlaps (face vs object, text vs tags), no hard
+gradient edges, the hero isn't muddy (if the glow washes it out, lower the overlay alphas). Fix and re-render until
+all yes. Save the page in `thumbs/designs/<slug>.html` with the video in the relay.
 
 ## 8. SEO
 - **Title** (max 60 chars), curiosity first; fiction titles never claim to be true: "The Man Who Stole the Crown Jewels and Got Rewarded",

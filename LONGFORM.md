@@ -72,8 +72,7 @@ Run the PLAYBOOK self-check gate on the whole script and the cold open; write `"
 Grab 12 candidate frames across the video, look at them together, and pick the most dramatic: a big face with a strong
 emotion next to the key object, bright, with the important part in the **top 55%** (the banner covers the bottom-centre
 caption zone). Then
-`bash compile/thumb_long.sh review/c<t>.png "LINE ONE" "LINE TWO" renders/thumb-long.jpg "<STICKER>"` (sticker by type as in PLAYBOOK step 7;
-grab frames caption-free with `QS='&nocap=1'`).
+designed 16:9 thumbnail exactly as PLAYBOOK step 7 (hero object centre, big face left third, two lines right): `cp compile/thumbkit/thumb.html thumb.html`, edit the DESIGN block, `bash compile/thumbkit/render.sh . thumb.html renders/thumb-long.jpg long` (example: thumbs/designs/desert-water-long.html).
 Text: 2 short lines, curiosity not a summary ("HE SOLD THE / EIFFEL TOWER", "SHE VANISHED / FOR 11 DAYS"), 14 characters
 max each. Check it at 320 px wide before using it.
 
