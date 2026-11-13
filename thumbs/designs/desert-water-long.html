@@ -1,0 +1,78 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>@font-face{font-family:'Inter';font-weight:900;src:url('fonts/Inter-Black.otf');} html,body{margin:0;background:#000} canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/"}}</script></head>
+<body><canvas id="c" width="2560" height="1440"></canvas>
+<script type="module">
+import { drawToon, INK } from './src/core/toon.js';
+const c = document.getElementById('c'), g = c.getContext('2d'), W = 2560, H = 1440;
+const R = (s) => { let x = Math.sin(s * 127.1) * 43758.5453; return x - Math.floor(x); };
+await document.fonts.load('900 100px Inter');
+const bg = new Image(); bg.src = 'thumb_bg.jpg'; await bg.decode();
+// 1. background: market, cropped above the caption, heavy blur, hot grade
+g.save(); g.filter = 'blur(14px) saturate(1.35) brightness(1.05)'; g.drawImage(bg, 0, 0, 1920, 860, -60, -60, W + 120, H + 120); g.restore();
+let gr = g.createLinearGradient(0, 0, W, 0); gr.addColorStop(0, 'rgba(255,120,30,0.35)'); gr.addColorStop(0.55, 'rgba(255,90,20,0.15)'); gr.addColorStop(1, 'rgba(20,10,40,0.55)');
+g.fillStyle = gr; g.fillRect(0, 0, W, H);
+// the sun: blazing hot, top-left
+gr = g.createRadialGradient(260, 160, 10, 260, 160, 900); gr.addColorStop(0, 'rgba(255,250,210,1)'); gr.addColorStop(0.15, 'rgba(255,210,90,0.85)'); gr.addColorStop(0.5, 'rgba(255,140,40,0.25)'); gr.addColorStop(1, 'rgba(255,120,30,0)');
+g.fillStyle = gr; g.fillRect(0, 0, W, H);
+// 2. cold aura behind the pot (cyan vs orange contrast)
+const px = 1300, py = 1010;
+gr = g.createRadialGradient(px, py - 120, 40, px, py - 120, 640); gr.addColorStop(0, 'rgba(160,240,255,0.95)'); gr.addColorStop(0.35, 'rgba(80,200,255,0.55)'); gr.addColorStop(1, 'rgba(40,160,255,0)');
+g.fillStyle = gr; g.fillRect(0, 0, W, H);
+// light rays from the pot
+g.save(); g.translate(px, py - 140); g.globalCompositeOperation = 'screen';
+for (let i = 0; i < 14; i++) { g.rotate(Math.PI * 2 / 14); g.fillStyle = 'rgba(190,245,255,0.16)'; g.beginPath(); g.moveTo(0, 0); g.lineTo(-60, -900); g.lineTo(60, -900); g.closePath(); g.fill(); }
+g.restore();
+// 3. the boy: huge, left, sweating in the heat, shocked at the pot
+g.save(); g.translate(-170, 180); g.scale(1.85, 1.85);
+drawToon(g, { body: '#F28C28', hat: 'beanie', hatCol: '#2E5FA8', neck: 'scarf', neckCol: '#D8343F', extra: ['freckles'] },
+  { mood: 'shock', look: [0.9, 0.35], talk: 0.85, sweat: 1, armR: [62, 38], armL: [14, 10] });
+g.restore();
+// heat on the boy: big sweat drops + heat waves
+const drop = (x, y, s) => { g.fillStyle = '#9FDcFF'; g.strokeStyle = INK; g.lineWidth = 8; g.beginPath(); g.moveTo(x, y - s * 1.7); g.bezierCurveTo(x + s, y - s * 0.2, x + s, y + s, x, y + s); g.bezierCurveTo(x - s, y + s, x - s, y - s * 0.2, x, y - s * 1.7); g.fill(); g.stroke(); g.fillStyle = '#FFFFFF'; g.beginPath(); g.ellipse(x - s * 0.35, y, s * 0.18, s * 0.35, 0.3, 0, 7); g.fill(); };
+drop(560, 470, 34); drop(70, 520, 26); drop(610, 610, 22);
+g.strokeStyle = 'rgba(255,240,200,0.75)'; g.lineWidth = 10; g.lineCap = 'round'; for (let k = 0; k < 3; k++) { g.beginPath(); for (let y = 0; y <= 220; y += 10) { const x = 120 + k * 150 + Math.sin(y / 22) * 16; y ? g.lineTo(x, 60 - y * 0) + 0 : g.moveTo(x, -20); } }
+// 4. the pot: clay, sweating cold drops, frost rim, mist
+g.save(); g.translate(px, py);
+g.lineWidth = 16; g.strokeStyle = INK; g.lineJoin = 'round';
+const pot = () => { g.beginPath(); g.moveTo(-95, -330); g.bezierCurveTo(-110, -270, -300, -230, -300, -40); g.bezierCurveTo(-300, 150, -170, 230, 0, 230); g.bezierCurveTo(170, 230, 300, 150, 300, -40); g.bezierCurveTo(300, -230, 110, -270, 95, -330); g.closePath(); };
+pot(); gr = g.createLinearGradient(-300, 0, 300, 0); gr.addColorStop(0, '#B8562A'); gr.addColorStop(0.45, '#E07A3F'); gr.addColorStop(1, '#8E3C18'); g.fillStyle = gr; g.fill();
+g.save(); pot(); g.clip(); gr = g.createLinearGradient(0, -330, 0, 230); gr.addColorStop(0, 'rgba(200,245,255,0.30)'); gr.addColorStop(0.45, 'rgba(150,225,255,0.0)'); gr.addColorStop(1, 'rgba(120,210,255,0.22)'); g.fillStyle = gr; g.fillRect(-320, -340, 640, 600);
+// wet cloth wrap
+g.fillStyle = 'rgba(245,240,225,0.92)'; g.beginPath(); g.moveTo(-320, -110); g.bezierCurveTo(-100, -60, 100, -60, 320, -110); g.lineTo(320, 60); g.bezierCurveTo(100, 110, -100, 110, -320, 60); g.closePath(); g.fill();
+g.strokeStyle = 'rgba(150,200,220,0.7)'; g.lineWidth = 6; for (let i = 0; i < 6; i++) { g.beginPath(); g.moveTo(-320, -80 + i * 26); g.bezierCurveTo(-100, -36 + i * 26, 100, -36 + i * 26, 320, -80 + i * 26); g.stroke(); }
+g.restore();
+g.save(); g.shadowColor = '#7FE3FF'; g.shadowBlur = 70; g.lineWidth = 30; g.strokeStyle = 'rgba(170,240,255,0.9)'; pot(); g.stroke(); g.restore(); g.lineWidth = 16; g.strokeStyle = INK; pot(); g.stroke();
+// frost crust on the shoulders
+g.save(); pot(); g.clip(); g.fillStyle = 'rgba(240,252,255,0.85)'; for (let i = 0; i < 60; i++) { const x = -260 + R(i * 1.9) * 520, y = -250 + R(i * 4.1) * 70 + Math.abs(x) * 0.35; g.beginPath(); g.arc(x, y, 6 + R(i) * 16, 0, 7); g.fill(); } g.restore();
+// rim with frost
+g.fillStyle = '#B5582E'; g.beginPath(); g.ellipse(0, -330, 130, 38, 0, 0, Math.PI * 2); g.fill(); g.stroke();
+g.fillStyle = '#EFFBFF'; g.beginPath(); g.ellipse(0, -342, 138, 22, 0, Math.PI, 0); g.fill();
+for (let i = 0; i < 9; i++) { const x = -120 + i * 30; g.beginPath(); g.moveTo(x - 10, -336); g.lineTo(x, -300 - R(i) * 34); g.lineTo(x + 10, -336); g.fill(); }
+// condensation drops
+for (let i = 0; i < 26; i++) { const a = R(i * 3.1) * 2 - 1, b = R(i * 7.7); const x = a * 240 * (1 - b * 0.3), y = -230 + b * 420; if (y > -110 && y < 70) continue;
+  g.fillStyle = 'rgba(230,250,255,0.95)'; g.strokeStyle = 'rgba(40,110,160,0.8)'; g.lineWidth = 4; const s = 9 + R(i) * 12;
+  g.beginPath(); g.moveTo(x, y - s * 1.6); g.bezierCurveTo(x + s, y - s * 0.2, x + s, y + s, x, y + s); g.bezierCurveTo(x - s, y + s, x - s, y - s * 0.2, x, y - s * 1.6); g.fill(); g.stroke(); }
+g.restore();
+// cold mist curling out of the pot
+g.save(); g.globalCompositeOperation = 'screen';
+for (let i = 0; i < 40; i++) { const t = i / 40; const x = px + Math.sin(t * 9) * 120 * t + (R(i) - 0.5) * 60, y = py - 420 - t * 380; gr = g.createRadialGradient(x, y, 0, x, y, 90 + t * 110);
+  gr.addColorStop(0, `rgba(220,250,255,${0.18 * (1 - t)})`); gr.addColorStop(1, 'rgba(220,250,255,0)'); g.fillStyle = gr; g.fillRect(x - 220, y - 220, 440, 440); }
+g.restore();
+// frost sparkles
+for (let i = 0; i < 34; i++) { const a = R(i * 5.3) * Math.PI * 2, d = 260 + R(i * 2.2) * 330; const x = px + Math.cos(a) * d, y = py - 140 + Math.sin(a) * d * 0.8; const s = 10 + R(i) * 22;
+  g.save(); g.translate(x, y); g.fillStyle = '#FFFFFF'; g.shadowColor = '#9FE8FF'; g.shadowBlur = 24; g.beginPath(); g.moveTo(0, -s); g.lineTo(s * 0.25, -s * 0.25); g.lineTo(s, 0); g.lineTo(s * 0.25, s * 0.25); g.lineTo(0, s); g.lineTo(-s * 0.25, s * 0.25); g.lineTo(-s, 0); g.lineTo(-s * 0.25, -s * 0.25); g.closePath(); g.fill(); g.restore(); }
+// 5. vignette
+gr = g.createRadialGradient(W * 0.5, H * 0.5, H * 0.45, W * 0.5, H * 0.5, H * 1.15); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,0.6)'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+// 6. text: two huge lines, right column
+const word = (s, x, y, size, fill, glow, rot) => { g.save(); g.translate(x, y); g.rotate(rot); g.font = `900 ${size}px Inter`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
+  g.fillStyle = 'rgba(0,0,0,0.5)'; g.fillText(s, 10, 22); g.lineWidth = size * 0.2; g.strokeStyle = '#0B0B14'; g.strokeText(s, 0, 0);
+  if (glow) { g.shadowColor = glow; g.shadowBlur = 60; } g.fillStyle = fill; g.fillText(s, 0, 0); g.shadowBlur = 0; g.restore(); };
+const fit = (s, size, maxW) => { g.font = `900 ${size}px Inter`; return Math.min(size, size * maxW / g.measureText(s).width); };
+word('ICE COLD', 2010, 420, fit('ICE COLD', 300, 1000), '#E8FBFF', '#5AD2FF', -0.05);
+word('NO ICE?!', 2010, 740, fit('NO ICE?!', 330, 1000), '#FFD43B', null, -0.05);
+// heat tag on the sun side
+g.save(); g.translate(790, 190); g.rotate(-0.08); g.fillStyle = '#E63946'; g.strokeStyle = '#0B0B14'; g.lineWidth = 12; g.beginPath(); g.roundRect(-150, -66, 300, 132, 28); g.fill(); g.stroke();
+g.fillStyle = '#FFFFFF'; g.font = '900 96px Inter'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('50°C', 0, 6); g.restore();
+document.title = 'DONE';
+</script></body></html>
