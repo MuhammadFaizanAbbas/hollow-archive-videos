@@ -239,7 +239,8 @@ the words must be readable and the face clear.
   and carry on. At the start of every run, retry the thumbnail of every `THUMB PENDING` row (raw `thumb.jpg` URL from its
   relay folder, or rebuild it with step 7 if the folder is gone); on success replace it with `thumbnail set`.
 - At the start of every run (step 0), first look for a Log row with a Drive file ID but no Video ID (`RENDERED`,
-  `UPLOADING` or `FAILED`). Check the channel for its title; if it is not there, upload that finished video (step 9.4
+  `UPLOADING` or `FAILED`). **Never touch rows whose Status starts with `HOLD` or is `SCHEDULED`, or whose Topic starts with `Mars Base 7`:
+  the Mars Base 7 series is released only by the owner (or by its own scheduled task), never by the Shorts runs.** Check the channel for its title; if it is not there, upload that finished video (step 9.4
   onwards) instead of making a new one, and stop after it.
 
 ## Failure handling
