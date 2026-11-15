@@ -17,15 +17,19 @@ lemon(300, 1500, 2.2, -0.4); lemon(1900, 1650, 2.0, 0.5); lemon(1750, 3350, 2.4,
 // splash drops
 g.fillStyle = 'rgba(255,255,255,0.8)'; for (let i = 0; i < 40; i++) { const x = R(i * 2.1) * W, y = 1300 + R(i * 5.3) * 2200, s = 10 + R(i) * 26; g.beginPath(); g.ellipse(x, y, s * 0.7, s, 0, 0, 7); g.fill(); }
 // the robber: huge, smug, shiny
-g.save(); g.translate(-60, 1180); g.scale(3.6, 3.6);
-drawToon(g, { body: '#4F7FB8', head: '#EBC49A', hair: 'curly', hairCol: '#3A2A22', extra: ['juice', 'mustache'], neck: 'collar' }, { mood: 'smug', look: [0.5, 0], talk: 0, armR: [120, 40], armL: [10, 10] });
+g.save(); g.translate(-220, 1130); g.scale(3.7, 3.7);
+drawToon(g, { body: '#4F7FB8', head: '#EBC49A', hair: 'curly', hairCol: '#3A2A22', extra: ['juice', 'mustache'], neck: 'collar' }, { mood: 'proud', look: [0.4, 0.2], talk: 0, armR: [120, 40], armL: [10, 10] });
 g.restore();
 // polaroid with headless photo
-g.save(); g.translate(1600, 3060); g.rotate(0.14); g.scale(0.62, 0.62); g.shadowColor = 'rgba(0,0,0,0.4)'; g.shadowBlur = 60; g.fillStyle = '#FBF8F0'; g.strokeStyle = INK; g.lineWidth = 18; g.beginPath(); g.roundRect(-400, -480, 800, 960, 30); g.fill(); g.shadowBlur = 0; g.stroke();
+g.save(); g.translate(1500, 2980); g.rotate(0.12); g.scale(0.9, 0.9); g.shadowColor = 'rgba(0,0,0,0.4)'; g.shadowBlur = 60; g.fillStyle = '#FBF8F0'; g.strokeStyle = INK; g.lineWidth = 18; g.beginPath(); g.roundRect(-400, -480, 800, 960, 30); g.fill(); g.shadowBlur = 0; g.stroke();
 g.fillStyle = '#D8E6D0'; g.fillRect(-350, -430, 700, 700); g.strokeRect(-350, -430, 700, 700); g.fillStyle = '#EFC85A'; g.fillRect(-350, 120, 700, 150);
 g.fillStyle = '#4F7FB8'; g.beginPath(); g.roundRect(-140, -60, 280, 380, 80); g.fill(); g.stroke();
 g.setLineDash([22, 18]); g.strokeStyle = '#E63946'; g.lineWidth = 14; g.beginPath(); g.arc(0, -190, 130, 0, 7); g.stroke(); g.setLineDash([]); g.fillStyle = '#E63946'; g.font = '900 150px Inter'; g.textAlign = 'center'; g.fillText('?', 0, -140);
 g.restore();
+
+// NO FACE?! sticker
+g.save(); g.translate(1560, 2200); g.rotate(-0.1); g.fillStyle = '#E63946'; g.strokeStyle = '#0B0B14'; g.lineWidth = 16; g.beginPath(); for (let i = 0; i < 28; i++) { const a = i / 28 * Math.PI * 2, r = i % 2 ? 300 : 380; g.lineTo(Math.cos(a) * r * 1.2, Math.sin(a) * r * 0.78); } g.closePath(); g.fill(); g.stroke();
+g.fillStyle = '#FFFFFF'; g.font = '900 112px Inter'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('NO FACE?!', 0, 8); g.restore();
 gr = g.createRadialGradient(W / 2, H * 0.55, H * 0.3, W / 2, H * 0.55, H * 0.78); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(120,50,0,0.45)'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
 const word = (s, x, y, size, fill, glow, rot) => { g.save(); g.translate(x, y); g.rotate(rot); g.font = `900 ${size}px Inter`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
   g.fillStyle = 'rgba(0,0,0,0.45)'; g.fillText(s, 14, 30); g.lineWidth = size * 0.2; g.strokeStyle = '#0B0B14'; g.strokeText(s, 0, 0); if (glow) { g.shadowColor = glow; g.shadowBlur = 60; } g.fillStyle = fill; g.fillText(s, 0, 0); g.restore(); };
