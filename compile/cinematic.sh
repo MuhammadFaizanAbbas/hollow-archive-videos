@@ -11,4 +11,6 @@ grep -q "FX.post(sh" src/main.js || sed -i "s#  ctx.save(); sh.draw(lt, d, t, bl
 sed -i 's#bokeh.enabled = (look.aperture ?? 0.0015) > 0;#bokeh.enabled = look.dof === true \&\& (look.aperture ?? 0) > 0; /* HA: sharp by default */#' src/core/engine.js
 # caption-free frames for thumbnails: add &nocap=1 to QS when grabbing cover frames
 grep -q 'nocap' src/main.js || sed -i 's/^  drawCaption(t);/  if (!location.search.includes("nocap")) drawCaption(t);/' src/main.js
-grep -q "FX.post(sh" src/main.js && grep -q "HA: sharp" src/core/engine.js && grep -q "voice_chain" tools/mix.py && echo "cinematic OK: $P"
+# clean look (reference style): skin + hair on characters, soft light sets, gentle post, white captions, dissolves, overlay marks
+bash "$D/clean/apply.sh" . >/dev/null
+grep -q "FX.post(sh" src/main.js && grep -q "HA: sharp" src/core/engine.js && grep -q "voice_chain" tools/mix.py && grep -q "HA-CLEAN" src/main.js && echo "cinematic OK: $P"

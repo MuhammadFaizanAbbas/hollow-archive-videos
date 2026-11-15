@@ -191,6 +191,23 @@ word and the reveal's number get the yellow highlight.
    insert cards look hand-drawn and clean, no person seen edge-on, nobody floating, captions readable, every shot
    matches its line, sound effects land on their beats. Fix and re-check.
 
+## 6a. THE CLEAN LOOK (default for every Tall Tale short; the owner's reference is @davepaper's prison short)
+`cinematic.sh` also installs `compile/clean/` (prints `cinematic OK`). Template: `compile/clean/example/shots.example.js`
+(courtroom, day street, night overhead street, close-up with chalk, calendar + tape). Copy its helpers (`shoot`, `P`, `SK`).
+- **Light**: soft, bright, even. `W2.room2(E, {...})` = cosy detailed interior (wainscot, beams, windows, pendants, clock,
+  posters); `W2.townStreet(E, { night, flagAt })` = brick street (porticos, lamps, rails, cars, flag; call `.wave(t)`).
+  Use `W2.paintedSky` clouds, a vivid blue day sky, a dark blue night with lamp glow. Never grey, never murky.
+- **Characters**: real skin tones (`SK`), hair (`short swoop bob buzz curly long bald`), `extra: ['stubble','glasses','mustache']`,
+  patterns (`hstripes`), hats. Big readable faces, 1/3 of frame in dialogue. Keep each look fixed all video.
+- **In-world overlays** (fx2): `X.chalk(text,x,y,k)` hand-written words, `X.arrow`, `X.tape(x,y,len,label,k)` measure,
+  `X.calendar(x,y,month,crossedDays,k)`. Use them to show numbers, dates and distances instead of badge cards.
+- **Captions**: small, clean, white, soft shadow, one to three words (the patched captions.js does this); no yellow slabs.
+- **Post**: no grain, vignette 0.12, grade 0.4, no depth-of-field blur. Everything sharp and smooth.
+- **Cuts**: hard cut on action, `dissolve: 0.4` on the shot for a soft cross-fade between places/times.
+- **Camera**: slow eased push-ins and drifts, never inside walls (check frames), eyes look at what matters.
+- **QA, no mistakes**: contact sheet every 1 s, then full-size frames of every new set; fix floating people, camera inside
+  geometry, washed-out sky, overlaps with captions, wrong mouth or eyes before the final render.
+
 ## 7. Thumbnail: designed, not a frame grab (the owner's favourite style)
 Never put a banner over a video frame again. Every thumbnail is **drawn** with `compile/thumbkit/thumb.html`
 (canvas + the same Toon characters as the video), like `thumbs/designs/tyres.html`, `radio-tomorrow.html` (Shorts)
