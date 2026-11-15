@@ -24,7 +24,7 @@ reactions, the aftermath, and one or two "most people don't know this" details. 
 BBC/Smithsonian/National Geographic/History.com, books' publisher pages. List all in `script.json` "sources".
 
 ## 4. Script: an excellent story (3-6 min, 600-950 words)
-Voice **`am_eric`, `speed: 1.05`** (the channel voice, a touch calmer for long form), `gap: 0.1`, `lead: 0.3`; music
+Voice **`am_puck`, `speed: 1.05`** (playful, lively; never a documentary voice), `gap: 0.1`, `lead: 0.3`; music
 `story` for clever stories, tales and legends, `epic` for heists, wars and disasters, `tension` for spooky ones;
 ambience beds per scene (PLAYBOOK step 6.5). Structure (aim for a cut every 2.5-4 s, so 60-90 lines):
 1. **Cold open (0:00-0:20):** the most impossible moment of the story, then "But to understand how we got here, we

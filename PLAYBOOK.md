@@ -1,6 +1,6 @@
 ---
 name: hollow-archive-autopilot
-description: Make and publish one Hollow Archive YouTube Short end to end (story pick, script, Tall Tale 3D animation, thumbnail, GitHub relay, Google Drive, Sheet log, Zapier upload). Use for the scheduled 5 AM / 3 PM / 10 PM runs or when asked to post the next Hollow Archive short.
+description: Make and publish one Hollow Archive YouTube Short end to end (story pick, script, Tall Tale 3D animation, thumbnail, GitHub relay, Google Drive, Sheet log, Zapier upload). Use for the scheduled 6 AM run or when asked to post the next Hollow Archive short.
 ---
 
 # Hollow Archive autopilot
@@ -12,6 +12,17 @@ The run is unattended: nobody approves the plan, so use the defaults below, neve
 the Sheet. Build with the **faceless-shorts** skill, style **Tall Tale 3D** (`tall-tale`): load faceless-shorts with the
 Skill tool first, read `styles/tall-tale/STYLE.md` in full, and follow its build, QA and render rules. This file adds
 the channel's story rules and the publishing pipeline.
+
+## OWNER'S RULES (they override anything below; set 2026-11-15)
+1. **Video length ~60 s** (55-65 s, 130-160 words). Highly addictive: a stranger must not be able to swipe away.
+2. **Voice = playful and young, never a mature documentary voice.** Use `am_puck` (lively, playful), `speed 1.08`.
+   A documentary tone is why views were low. Tell it like an excited friend with jokes and little reactions.
+3. **Story type = SCIFI "world rule" stories first** (the owner loves them): "On this planet you can't wear pants",
+   "kids can only study at night". A weird rule, escalating consequences, and a logical, funny twist that explains it.
+4. **Click-bait packaging, honestly.** Title and thumbnail must hit the ego or open a curiosity gap (section 8a). Never lie
+   about the story: fiction is never called true.
+5. **The clean look** (section 6a) is the default animation style. Sharp, soft light, no blur.
+6. Never post the Mars Base 7 series from Shorts runs.
 
 ## Fixed IDs
 - Google Drive folder "Hollow Archive Shorts": `1qLLlaeu2NX6ZjYv7xHNjE9BHJ28kKC-5`
@@ -59,9 +70,13 @@ No unfinished cliffhangers. Four story types (Ideas column H):
   (the colony ship that arrives second because faster ships overtook it; the astronaut whose daughter is older than him
   because of time dilation; the radio that plays "tomorrow's" news from another time zone). Near-future, hopeful or
   funny, never horror or apocalypse gore. Start "In the year 2140…" only AFTER the hook line.
-**Which idea next:** the Ideas tab is already ordered as a rotation (SCIFI, TRUE, TRICK, LEGEND, TALE, …), so take the
-**first `NEW` row from the top**. When fewer than 12 NEW ideas remain, append 15 more in the same rotation, every one
-with a hook that states an impossible result (see step 5) and an ending that is not guessable from the hook.
+**WORLD-RULE format (the owner's favourite, SCIFI type):** the hook states a weird rule of an invented planet, moon,
+colony or starship ("On this planet, wearing pants is against the law, and nobody will tell the settlers why."). The
+story escalates with a newcomer who breaks the rule and sees what happens, hides the reason until the last 8 seconds, then
+the reveal explains the rule with one real-science or common-sense reason and a funny or heart-warming flip.
+**Which idea next:** take the **first `NEW` row from the top** of the Ideas tab (all SCIFI world-rule now). When fewer than
+12 NEW ideas remain, append 15 more of the SAME kind (id 7xx): a visual weird rule, a hook with a mystery, a payoff that
+is logical and not guessable, never horror. Do not refill with TRUE / TRICK / LEGEND unless the owner asks.
 **Never present fiction as true.** TRICK / LEGEND / TALE / SCIFI videos never say "true story", "real", "this actually
 happened", never use real living people, and never use a real recent tragedy. TRUE videos must be accurate.
 Avoid: gore, crimes against children, hate, conspiracy theories, medical or financial advice.
@@ -75,14 +90,17 @@ Avoid: gore, crimes against children, hate, conspiracy theories, medical or fina
 - TALE: no research needed; make sure any real-world detail you use is correct.
 - SCIFI: check the one real science idea the twist relies on (time dilation, orbits, sound on Mars, CO detectors) against 1-2 reliable sources (NASA, ESA, a university) and list them.
 
-## 5. Script: built for 75%+ retention (25-38 s, 75-105 words)
+## 5. Script: built for 75%+ retention (55-65 s, 130-160 words)
 Retention was stuck at 50-51% because the old scripts explained too early. The fix: **open a question in second one,
 keep it open, and answer it only in the last 3 seconds.** Everything below serves that.
 
-Voice **`am_eric`, `speed: 1.12`**, `gap: 0.05`, `lead: 0.1` (the first word starts at once), `outro: 0.6`. Music:
-`"music": "tension"` under the build (all types), then switch at the reveal line with
+Voice **`am_puck`, `speed: 1.08`** (playful and lively, NOT a documentary voice), `gap: 0.12`, `lead: 0.2`, `outro: 0.8`.
+Tone: an excited friend telling a wild story: jokes, "wait, what?", little reactions, short punchy sentences, no
+narrator-speak. Music: `"music": "bounce"` for funny or world-rule stories (`"tension"` only for scary-feeling builds), then switch at the reveal line with
 `"music2": "story"` (or `"epic"` for heists/wars), `"music2_at": <start time of the reveal line from data/timing.json>`. Almost no silence; one deliberate 0.4 s beat of silence
 right before the reveal (put `"gap": 0.4` on that line only).
+
+**A 60-second story needs two more mini-twists in the middle (at about 20 s and 40 s) so the viewer never feels the length.**
 
 **The 6-beat retention skeleton** (every short, every type):
 1. **HOOK (0-2 s, 6-10 words): the impossible result or a stake, never the setup.** It must make the viewer ask
@@ -120,7 +138,8 @@ right before the reveal (put `"gap": 0.4` on that line only).
 [ ] There's a false peak.
 [ ] The reveal is one sentence with a number.
 [ ] The last line loops into the first.
-[ ] 75-105 words, read aloud in 25-38 s.
+[ ] 130-160 words, read aloud in 55-65 s, with a new question or twist at least every 8 s.
+[ ] It sounds like a friend telling it, not a documentary.
 Write the gate result in script.json as `"gate": "7/7"`; never voice a script below 7/7.
 
 Connectors keep it rolling ("So…", "But…", "Which meant…"). A line is a cut: split sentences into 1-3 lines so the
@@ -240,6 +259,21 @@ character, `background()`, `hero()`: draw the hero with canvas paths, gradients 
 the face's emotion and understand the hero object. Check nothing overlaps (face vs object, text vs tags), no hard
 gradient edges, the hero isn't muddy (if the glow washes it out, lower the overlay alphas). Fix and re-render until
 all yes. Save the page in `thumbs/designs/<slug>.html` with the video in the relay.
+
+## 8a. Click-bait packaging (title + thumbnail text), honest but irresistible
+Goal: highest click-through rate. The viewer should think "I'd NEVER do that, let me see" or "wait, what?".
+- **Ego hit / reverse psychology patterns** (pick one per video, never the same twice in a row):
+  "You'd Never Be This Dumb… Right?" · "Don't Watch This If You Think You're Smart" · "Only Smart People Get This" ·
+  "I Bet You Can't Guess Why" · "99% Would Fail This" (only if it is a puzzle, never a made-up statistic about real people) ·
+  "This Planet Banned Pants. You Won't Believe Why".
+- **World-rule titles**: put the rule in the title and promise the reason: "Why Is Wearing Pants Illegal Here?" ·
+  "Kids Here Can't Study in the Daytime… Here's Why" · "Never Say NO on This Spaceship".
+- Title: 45-60 chars, one emoji at the end, curiosity gap, no spoiler, no lies. Fiction is never called "true story".
+- **Thumbnail**: the 1 hero + 1 face + 2 lines formula of section 7, with the two lines written in the same ego/curiosity
+  style ("YOU'D NEVER DO / THIS… RIGHT?", "PANTS ARE / ILLEGAL?!"), plus a sticker like `NO FACE?!`. Faces: smug, proud or
+  shocked, big, never sleepy. Check at phone size: readable in one second.
+- Description line 1 repeats the hook as a challenge ("Be honest, would you have worn the pants? 😏"). Add a pinned
+  comment that asks the viewer to guess or confess ("Which rule would YOU break first? 👇").
 
 ## 8. SEO
 - **Title** (max 60 chars), curiosity first; fiction titles never claim to be true: "The Man Who Stole the Crown Jewels and Got Rewarded",
