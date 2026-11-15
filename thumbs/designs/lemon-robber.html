@@ -30,8 +30,8 @@ gr = g.createRadialGradient(W / 2, H * 0.55, H * 0.3, W / 2, H * 0.55, H * 0.78)
 const word = (s, x, y, size, fill, glow, rot) => { g.save(); g.translate(x, y); g.rotate(rot); g.font = `900 ${size}px Inter`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
   g.fillStyle = 'rgba(0,0,0,0.45)'; g.fillText(s, 14, 30); g.lineWidth = size * 0.2; g.strokeStyle = '#0B0B14'; g.strokeText(s, 0, 0); if (glow) { g.shadowColor = glow; g.shadowBlur = 60; } g.fillStyle = fill; g.fillText(s, 0, 0); g.restore(); };
 const fit = (s, size, maxW) => { g.font = `900 ${size}px Inter`; return Math.min(size, size * maxW / g.measureText(s).width); };
-word('LEMON JUICE', W / 2, 470, fit('LEMON JUICE', 330, 1950), '#FFFFFF', '#FFF3A0', -0.03);
-word('INVISIBLE?!', W / 2, 830, fit('INVISIBLE?!', 340, 1950), '#E63946', null, -0.03);
-g.save(); g.translate(500, 130); g.rotate(-0.07); g.fillStyle = '#2E5FA8'; g.strokeStyle = '#0B0B14'; g.lineWidth = 12; g.beginPath(); g.roundRect(-290, -66, 580, 132, 30); g.fill(); g.stroke(); g.fillStyle = '#FFFFFF'; g.font = '900 84px Inter'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('TRUE STORY', 0, 6); g.restore();
+word("DON'T WATCH", W / 2, 470, fit("DON'T WATCH", 330, 1950), '#FFFFFF', '#FFF3A0', -0.03);
+word("IF YOU'RE SMART", W / 2, 830, fit("IF YOU'RE SMART", 340, 1950), '#E63946', null, -0.03);
+g.save(); g.translate(500, 130); g.rotate(-0.07); g.fillStyle = '#2E5FA8'; g.strokeStyle = '#0B0B14'; g.lineWidth = 12; g.beginPath(); g.roundRect(-290, -66, 580, 132, 30); g.fill(); g.stroke(); g.fillStyle = '#FFFFFF'; g.font = '900 84px Inter'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('100% TRUE', 0, 6); g.restore();
 document.title = 'DONE';
 </script></body></html>
