@@ -1,0 +1,81 @@
+{
+ "title": "The Bank Robber Who Wore Lemon Juice",
+ "voice": "am_puck",
+ "speed": 1.08,
+ "lead": 0.3,
+ "outro": 1.2,
+ "gap": 0.16,
+ "music": "bounce",
+ "sources": [
+  "Poundstone, Head in the Cloud (2016 excerpt): two Pittsburgh banks, daylight, no mask, 'But I wore the juice', Polaroid test, 1996 World Almanac led Dunning to the story",
+  "Wikipedia '1995 Greater Pittsburgh bank robberies' (neither robber wore a disguise, lemon juice on faces)",
+  "Kruger & Dunning 1999, 'Unskilled and Unaware of It' (opens with the Wheeler story)"
+ ],
+ "lines": [
+  {
+   "text": "A man robbed a bank in broad daylight, with no mask,"
+  },
+  {
+   "text": "and waved at the cameras."
+  },
+  {
+   "text": "He was sure nobody could see his face,"
+  },
+  {
+   "text": "because he'd covered it in lemon juice."
+  },
+  {
+   "text": "See, lemon juice works as invisible ink."
+  },
+  {
+   "text": "So he figured it would hide his face, too."
+  },
+  {
+   "text": "He even tested it, with a Polaroid selfie,"
+  },
+  {
+   "text": "and his face wasn't in the photo!"
+  },
+  {
+   "text": "Which was probably just a bad photo."
+  },
+  {
+   "text": "So he robbed two banks, smiling at every camera."
+  },
+  {
+   "text": "That night, the news showed the tape,"
+  },
+  {
+   "text": "and somebody knew him straight away."
+  },
+  {
+   "text": "When police arrived, he was shocked."
+  },
+  {
+   "text": "He said, but I wore the juice!"
+  },
+  {
+   "text": "Two professors studied him, and found something wild:"
+  },
+  {
+   "text": "the less people know, the surer they feel."
+  },
+  {
+   "text": "It's called the Dunning-Kruger effect."
+  },
+  {
+   "text": "So next time you're totally sure,"
+  },
+  {
+   "text": "check your Polaroid.",
+   "gap": 0.3
+  }
+ ],
+ "ambience": [
+  {
+   "type": "city",
+   "from": 0,
+   "to": 3.2
+  }
+ ]
+}

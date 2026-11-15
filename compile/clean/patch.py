@@ -8,6 +8,9 @@ if 'HA-CLEAN' not in t:
 export const SKIN = ['#F6D9B5', '#EBC49A', '#D9A877', '#B98457', '#8E5D3B', '#6B4229'];
 function drawHair(g, L, S, hx, hy, r, head) {
   const H = L.hair; const col = L.hairCol || '#2A2220';
+  if ((L.extra || []).includes('juice')) { g.save(); g.clip(head); g.fillStyle = 'rgba(255,226,70,0.3)'; g.fillRect(hx - r, hy - r, r * 2, r * 2); g.fillStyle = 'rgba(255,255,255,0.7)';
+    [[-0.45, -0.25, 0.22, 0.09], [0.4, -0.35, 0.18, 0.07], [-0.1, 0.35, 0.26, 0.08], [0.5, 0.2, 0.14, 0.06]].forEach(([a, b, w, hh]) => { g.beginPath(); g.ellipse(hx + a * r, hy + b * r, w * r, hh * r, -0.5, 0, 7); g.fill(); });
+    g.fillStyle = 'rgba(255,214,40,0.85)'; [-0.7, -0.2, 0.5].forEach((a, i) => { g.beginPath(); g.ellipse(hx + a * r, hy + r * (0.78 + 0.05 * i), r * 0.05, r * (0.1 + 0.04 * i), 0, 0, 7); g.fill(); }); g.restore(); }
   if ((L.extra || []).includes('stubble')) { g.save(); g.clip(head); g.fillStyle = 'rgba(40,30,25,0.55)';
     for (let i = 0; i < 70; i++) { const a = Math.PI * (0.12 + 0.76 * ((i * 0.618) % 1)), d = r * (0.62 + ((i * 0.37) % 1) * 0.3); g.beginPath(); g.arc(hx + Math.cos(a) * d, hy + Math.sin(a) * d * 0.95, 3.2, 0, 7); g.fill(); } g.restore(); }
   if (!H || H === 'bald' || ['cap', 'beanie', 'tophat', 'visor', 'bowler', 'cowboy', 'chef', 'police', 'mailcap', 'helmet', 'crown'].includes(L.hat)) {
