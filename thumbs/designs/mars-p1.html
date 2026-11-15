@@ -1,0 +1,58 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>@font-face{font-family:'Inter';font-weight:900;src:url('fonts/Inter-Black.otf');} html,body{margin:0;background:#000} canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/"}}</script></head>
+<body><canvas id="c" width="2160" height="3840"></canvas>
+<script type="module">
+import { drawToon, INK } from './src/core/toon.js';
+const c = document.getElementById('c'), g = c.getContext('2d'), W = 2160, H = 3840;
+const R = (s) => { let x = Math.sin(s * 127.1) * 43758.5453; return x - Math.floor(x); };
+await document.fonts.load('900 100px Inter');
+// 1. Mars sky + ground
+let gr = g.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, '#2B1A3F'); gr.addColorStop(0.3, '#8A3F4A'); gr.addColorStop(0.5, '#E9895A'); gr.addColorStop(0.52, '#B4492B'); gr.addColorStop(1, '#6E2418');
+g.fillStyle = gr; g.fillRect(0, 0, W, H);
+// stars + small sun glow
+g.fillStyle = '#FFFFFF'; for (let i = 0; i < 70; i++) { g.globalAlpha = 0.3 + R(i) * 0.6; g.beginPath(); g.arc(R(i * 3.7) * W, R(i * 8.3) * H * 0.34, 2 + R(i * 2) * 5, 0, 7); g.fill(); } g.globalAlpha = 1;
+gr = g.createRadialGradient(1750, 1900, 10, 1750, 1900, 700); gr.addColorStop(0, 'rgba(190,225,255,0.9)'); gr.addColorStop(0.2, 'rgba(255,200,150,0.5)'); gr.addColorStop(1, 'rgba(255,160,100,0)'); g.fillStyle = gr; g.fillRect(0, 1000, W, 1800);
+// far canyon rocks
+g.fillStyle = '#7A2E22'; g.beginPath(); g.moveTo(0, 1980); for (let x = 0; x <= W; x += 120) g.lineTo(x, 1850 - R(x) * 160 - (x > 1300 ? 120 : 0)); g.lineTo(W, 2000); g.lineTo(0, 2000); g.fill();
+// 2. base wall + big round airlock door (glowing from inside), center-right
+g.save(); g.translate(1150, 1560);
+g.fillStyle = '#5E6A82'; g.strokeStyle = INK; g.lineWidth = 22; g.beginPath(); g.roundRect(-560, -640, 1120, 1240, 60); g.fill(); g.stroke();
+g.strokeStyle = 'rgba(20,28,45,0.45)'; g.lineWidth = 10; for (let i = -1; i <= 1; i++) { g.beginPath(); g.moveTo(-540, i * 330); g.lineTo(540, i * 330); g.stroke(); }
+gr = g.createRadialGradient(0, -40, 20, 0, -40, 400); gr.addColorStop(0, '#FFF3C2'); gr.addColorStop(1, '#FF9D3A'); g.shadowColor = '#FFC060'; g.shadowBlur = 140;
+g.fillStyle = '#8A97A8'; g.lineWidth = 22; g.strokeStyle = INK; g.beginPath(); g.arc(0, -40, 380, 0, 7); g.fill(); g.stroke(); g.shadowBlur = 0;
+g.fillStyle = gr; g.beginPath(); g.arc(0, -40, 250, 0, 7); g.fill(); g.lineWidth = 18; g.stroke();
+g.fillStyle = '#3A3F55'; for (let i = 0; i < 8; i++) { const a = i * Math.PI / 4 + 0.4; g.beginPath(); g.arc(Math.cos(a) * 320, -40 + Math.sin(a) * 320, 16, 0, 7); g.fill(); }
+// the shadow of a visitor in the window glow
+g.fillStyle = 'rgba(30,10,40,0.85)'; g.beginPath(); g.ellipse(40, -20, 60, 74, 0, 0, 7); g.fill(); g.beginPath(); g.moveTo(-70, 210); g.bezierCurveTo(-90, 60, 160, 60, 140, 210); g.closePath(); g.fill();
+g.fillStyle = '#E63946'; g.beginPath(); g.arc(-440, -540, 26, 0, 7); g.fill();
+g.restore();
+// sand in front
+gr = g.createLinearGradient(0, 2100, 0, H); gr.addColorStop(0, '#C45A32'); gr.addColorStop(1, '#6E2418'); g.fillStyle = gr; g.beginPath(); g.moveTo(0, 2140); g.bezierCurveTo(700, 2060, 1500, 2200, W, 2100); g.lineTo(W, H); g.lineTo(0, H); g.fill();
+// 3. THE FOOTPRINT: a giant boot print in the sand, pointing at the door
+g.save(); g.translate(900, 2290); g.rotate(-0.08); g.scale(1.1, 1.1);
+const sole = () => { g.beginPath(); g.moveTo(-120, -250); g.bezierCurveTo(-190, -330, 190, -330, 150, -230); g.bezierCurveTo(130, -140, 190, -20, 150, 40); g.bezierCurveTo(100, 80, -110, 80, -150, 40); g.bezierCurveTo(-190, -20, -100, -140, -120, -250); g.closePath(); };
+const heel = () => { g.beginPath(); g.roundRect(-110, 120, 220, 150, 60); };
+g.shadowColor = 'rgba(0,0,0,0.55)'; g.shadowBlur = 40; g.fillStyle = '#4A150E'; sole(); g.fill(); heel(); g.fill(); g.shadowBlur = 0;
+g.lineWidth = 12; g.strokeStyle = '#220806'; sole(); g.stroke(); heel(); g.stroke(); g.save(); g.shadowColor = '#FFD08A'; g.shadowBlur = 50; g.lineWidth = 6; g.strokeStyle = '#FFC27A'; g.translate(0, 6); sole(); g.stroke(); heel(); g.stroke(); g.restore();
+g.strokeStyle = '#220806'; g.lineWidth = 14; g.lineCap = 'round'; for (let i = 0; i < 5; i++) { g.beginPath(); g.moveTo(-120 + Math.abs(i - 2) * 8, -230 + i * 56); g.lineTo(120 - Math.abs(i - 2) * 8, -230 + i * 56); g.stroke(); }
+for (let i = 0; i < 2; i++) { g.beginPath(); g.moveTo(-70, 160 + i * 56); g.lineTo(70, 160 + i * 56); g.stroke(); }
+g.restore();
+// 4. the crew: Ines big and shocked at left, Tomas and Mei behind/right
+const who = (look, st, x, y, s) => { g.save(); g.translate(x, y); g.scale(s, s); drawToon(g, look, st); g.restore(); };
+who({ body: '#F28C28', hat: 'beanie', hatCol: '#1E2230', extra: ['freckles'] }, { mood: 'worried', look: [-0.6, 0.2], talk: 0, sweat: 1, armR: [20, 10], armL: [10, 10] }, 810, 2600, 1.9);
+who({ body: '#4CAF50', hat: 'visor', hatCol: '#2E8B3E', extra: ['glasses'] }, { mood: 'shock', look: [-0.5, 0.2], talk: 0.5, armR: [40, 30], armL: [10, 10] }, 1440, 2700, 1.6);
+who({ body: '#2FA89A', hat: 'none', neck: 'scarf', neckCol: '#E0B23A' }, { mood: 'shock', look: [0.7, 0.3], talk: 0.9, sweat: 1, armR: [62, 38], armL: [14, 10] }, -170, 2760, 3.0);
+// 5. vignette
+gr = g.createRadialGradient(W / 2, H * 0.55, H * 0.3, W / 2, H * 0.55, H * 0.78); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(15,5,25,0.6)'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+// 6. text
+const word = (s, x, y, size, fill, glow, rot) => { g.save(); g.translate(x, y); g.rotate(rot); g.font = `900 ${size}px Inter`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
+  g.fillStyle = 'rgba(0,0,0,0.5)'; g.fillText(s, 14, 30); g.lineWidth = size * 0.2; g.strokeStyle = '#0B0B14'; g.strokeText(s, 0, 0);
+  if (glow) { g.shadowColor = glow; g.shadowBlur = 70; } g.fillStyle = fill; g.fillText(s, 0, 0); g.shadowBlur = 0; g.restore(); };
+const fit = (s, size, maxW) => { g.font = `900 ${size}px Inter`; return Math.min(size, size * maxW / g.measureText(s).width); };
+word('SOMEONE WAS', W / 2, 480, fit('SOMEONE WAS', 300, 1950), '#FFFFFF', '#FFB070', -0.03);
+word('AT OUR DOOR', W / 2, 820, fit('AT OUR DOOR', 330, 1950), '#FFD43B', null, -0.03);
+const pill = (txt, x, y, bg, rot, size = 84) => { g.save(); g.translate(x, y); g.rotate(rot); g.font = `900 ${size}px Inter`; const w = g.measureText(txt).width + 110; g.fillStyle = bg; g.strokeStyle = '#0B0B14'; g.lineWidth = 12; g.beginPath(); g.roundRect(-w / 2, -size * 0.8, w, size * 1.6, 28); g.fill(); g.stroke(); g.fillStyle = '#FFFFFF'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(txt, 0, 6); g.restore(); };
+pill('MARS BASE 7 · PART 1', 760, 130, '#2E5FA8', -0.03, 70); pill('AIR 10', 1750, 1130, '#E63946', 0.06, 100);
+document.title = 'DONE';
+</script></body></html>
