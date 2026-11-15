@@ -1,0 +1,13 @@
+{ "title": "10 Wild Stories With Endings You Won't See Coming", "voice": "am_eric", "speed": 1.08,
+  "thumb1": "10 WILD", "thumb2": "STORIES", "sticker": "COUNTDOWN",
+  "items": [
+  {"mp4":"videos/2026-11-12-fake-town/fake-town.mp4","title":"The Fake Town on the Map"},
+  {"mp4":"videos/2026-11-13-tyres/tyres.mp4","title":"Tyres Flat on Purpose"},
+  {"mp4":"videos/2026-11-11-meat-shower/meat-shower.mp4","title":"It Rained Meat in Kentucky"},
+  {"mp4":"videos/2026-11-11-mona-lisa-heist/mona-lisa-heist.mp4","title":"The Mona Lisa Thief"},
+  {"mp4":"videos/2026-11-12-birbal-khichdi/birbal-khichdi.mp4","title":"Birbal's Khichdi Trick"},
+  {"mp4":"videos/2026-11-15-bank-thief/bank-thief.mp4","title":"The Thief Who Took Nothing"},
+  {"mp4":"videos/2026-11-11-crown-jewels/crown-jewels.mp4","title":"Stealing the Crown Jewels"},
+  {"mp4":"videos/2026-11-12-colony-ship/colony-ship.mp4","title":"The Colony Ship Second"},
+  {"mp4":"videos/2026-11-13-radio-tomorrow/radio-tomorrow.mp4","title":"The Radio From Tomorrow"},
+  {"mp4":"videos/2026-11-12-desert-water/desert-water.mp4","title":"Cold Water, No Ice"} ] }
