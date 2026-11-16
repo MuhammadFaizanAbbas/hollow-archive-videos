@@ -1,0 +1,95 @@
+{
+ "title": "The Hero Who Can Only Climb When She Tells the Truth",
+ "voice": "am_puck",
+ "speed": 1.04,
+ "lead": 0.2,
+ "outro": 0.9,
+ "gap": 0.16,
+ "music": "bounce",
+ "sources": [
+  "Fiction. Original hero 'Nova Wren'. The reveal uses the everyday idea that nervous hands sweat and wet fingertips lose grip."
+ ],
+ "gate": "7/7",
+ "ambience": [
+  {
+   "type": "city",
+   "from": 0,
+   "to": 4
+  }
+ ],
+ "lines": [
+  {
+   "text": "In this city, the hero sticks to skyscrapers, but only when she tells the truth."
+  },
+  {
+   "text": "Her name was Nova Wren, and tonight she had one job:"
+  },
+  {
+   "text": "stop the Glitch Bandit, before sunrise."
+  },
+  {
+   "text": "He'd stolen every clock in the city."
+  },
+  {
+   "text": "Without clocks, even the bakery opened at midnight."
+  },
+  {
+   "text": "Nova climbed his tower, super easy."
+  },
+  {
+   "text": "Then he shouted, are you scared?"
+  },
+  {
+   "text": "She said, nope, not at all!"
+  },
+  {
+   "text": "And slid down three floors."
+  },
+  {
+   "text": "Wait, what? She tried again. I'm totally fine!"
+  },
+  {
+   "text": "Slipped again. Straight into a trash can."
+  },
+  {
+   "text": "Now her whole costume smelled like old pizza."
+  },
+  {
+   "text": "Then it got worse."
+  },
+  {
+   "text": "Everyone on the street was filming."
+  },
+  {
+   "text": "The mayor said, fix this, or lose the mask."
+  },
+  {
+   "text": "By sunrise she was hanging off the top, with one hand left."
+  },
+  {
+   "text": "A hundred metres up, wind howling, and the bandit just waved."
+  },
+  {
+   "text": "So she said the one honest thing."
+  },
+  {
+   "text": "I'm scared. I'm really, really scared."
+  },
+  {
+   "text": "And her hand stuck, like glue.",
+   "gap": 0.4
+  },
+  {
+   "text": "See, lies make you nervous, and nervous palms sweat."
+  },
+  {
+   "text": "Wet fingers slip. Honest, dry fingers grip."
+  },
+  {
+   "text": "She caught him, and kept her mask."
+  },
+  {
+   "text": "Which is why, in this city, the hero only sticks when she tells the truth."
+  }
+ ]
+}
