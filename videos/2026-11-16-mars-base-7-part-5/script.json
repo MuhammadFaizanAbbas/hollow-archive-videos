@@ -1,0 +1,131 @@
+{
+ "title": "Mars Base 7, Part 5: The Landing Site",
+ "type": "SCIFI",
+ "series": "Mars Base 7",
+ "part": 5,
+ "sol": 5,
+ "gate": "7/7",
+ "lead": 0.1,
+ "outro": 0.8,
+ "gap": 0.1,
+ "music": "tension",
+ "ambience": [
+  {
+   "type": "night",
+   "from": 0,
+   "to": 70,
+   "gain": 0.6
+  }
+ ],
+ "cast": {
+  "INES": {
+   "voice": "af_nicole",
+   "speed": 1.05,
+   "color": "#2FB8A8"
+  },
+  "TOMAS": {
+   "voice": "am_michael",
+   "speed": 1.12,
+   "color": "#F28C28"
+  },
+  "MEI": {
+   "voice": "af_heart",
+   "speed": 1.02,
+   "color": "#4CAF50"
+  },
+  "PIP": {
+   "voice": "af_sky",
+   "speed": 1.25,
+   "color": "#F2C230"
+  },
+  "ATLAS": {
+   "voice": "bm_george",
+   "speed": 0.95,
+   "color": "#4AA8FF"
+  },
+  "LENA": {
+   "voice": "af_bella",
+   "speed": 0.98,
+   "color": "#C77DFF",
+   "fx": "radio"
+  }
+ },
+ "sources": [
+  "Characters, bases and events are fictional (SCIFI series)"
+ ],
+ "lines": [
+  {
+   "sp": "INES",
+   "text": "Mei changed our landing site. On purpose."
+  },
+  {
+   "sp": "INES",
+   "text": "Previously: a dead base called us. And it knew Mei."
+  },
+  {
+   "sp": "ATLAS",
+   "text": "Oxygen reserve: six sols."
+  },
+  {
+   "sp": "INES",
+   "text": "Base Seven log. Sol five."
+  },
+  {
+   "sp": "INES",
+   "text": "Mei finally opened the seed tin."
+  },
+  {
+   "sp": "MEI",
+   "text": "My father was Hiro. He ran Base Three."
+  },
+  {
+   "sp": "MEI",
+   "text": "When it went silent, they said he was lost. I never believed them."
+  },
+  {
+   "sp": "INES",
+   "text": "Under the seeds, there was one old note."
+  },
+  {
+   "sp": "MEI",
+   "text": "Come close. I will be listening. And it had coordinates."
+  },
+  {
+   "sp": "INES",
+   "text": "So Mei had quietly moved our landing site. Twelve kilometres from his."
+  },
+  {
+   "sp": "TOMAS",
+   "text": "You put the whole crew next to a ghost base, because of a note?"
+  },
+  {
+   "sp": "MEI",
+   "text": "I'm sorry. I only needed to be close enough to hear him."
+  },
+  {
+   "sp": "PIP",
+   "text": "Beep. Hiro. Hiro. Hiro."
+  },
+  {
+   "sp": "LENA",
+   "text": "Mei. It's Lena Voss. Your father is alive."
+  },
+  {
+   "sp": "LENA",
+   "text": "And Base Three still has a working air plant."
+  },
+  {
+   "sp": "ATLAS",
+   "text": "Oxygen reserve: five sols."
+  },
+  {
+   "sp": "INES",
+   "text": "Tomorrow, we drive to the canyon."
+  }
+ ],
+ "airAt": [
+  6,
+  49.0,
+  5
+ ]
+}
