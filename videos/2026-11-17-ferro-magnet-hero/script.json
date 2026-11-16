@@ -1,0 +1,92 @@
+{
+ "title": "The Hero Who Runs on Magnets in a City With No Night Electricity",
+ "voice": "am_puck",
+ "speed": 1.04,
+ "lead": 0.2,
+ "outro": 0.9,
+ "gap": 0.16,
+ "music": "bounce",
+ "sources": [
+  "Fiction. Original hero 'Ferro'. Reveal: night moths steer by bright lights and circle lamps (transverse orientation; Smithsonian / Natural History Museum notes on moths and artificial light)."
+ ],
+ "gate": "7/7",
+ "ambience": [
+  {
+   "type": "city",
+   "from": 0,
+   "to": 4
+  }
+ ],
+ "lines": [
+  {
+   "text": "In this city, electricity is banned after dark, and nobody will say why."
+  },
+  {
+   "text": "Ferro was the city's hero, with one big problem."
+  },
+  {
+   "text": "His whole suit was made of fridge magnets."
+  },
+  {
+   "text": "So he was the only one who could fight at night."
+  },
+  {
+   "text": "That night, Mister Lumen flipped every switch in town."
+  },
+  {
+   "text": "Streetlights. Neon signs. Even the toasters."
+  },
+  {
+   "text": "Everything lit up at once."
+  },
+  {
+   "text": "And the sky started to rumble."
+  },
+  {
+   "text": "Ferro ran outside, and nobody could tell him why."
+  },
+  {
+   "text": "Then it got worse."
+  },
+  {
+   "text": "Huge shadows slid across the rooftops."
+  },
+  {
+   "text": "Wings, each one as big as a bus."
+  },
+  {
+   "text": "The crowd screamed, and hid behind their lamps."
+  },
+  {
+   "text": "Ferro tried his magnets, but giant moths don't care about magnets."
+  },
+  {
+   "text": "By midnight, the whole city was covered in fluff."
+  },
+  {
+   "text": "And every light was still on."
+  },
+  {
+   "text": "Then he saw it: the biggest lamp in town, on a steel pole."
+  },
+  {
+   "text": "He stuck it to his back, with one huge magnet, and ran.",
+   "gap": 0.4
+  },
+  {
+   "text": "And the moths followed the glow, out of the city, and over the sea."
+  },
+  {
+   "text": "See, night moths steer by the brightest light they can see."
+  },
+  {
+   "text": "That's why they circle every lamp."
+  },
+  {
+   "text": "Ferro came home at dawn, and switched every light off."
+  },
+  {
+   "text": "Which is why, in this city, electricity is banned after dark."
+  }
+ ]
+}

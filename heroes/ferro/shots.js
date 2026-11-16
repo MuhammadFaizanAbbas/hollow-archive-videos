@@ -1,0 +1,105 @@
+// THE BANK ROBBER WHO WORE LEMON JUICE: Tall Tale 3D, the CLEAN LOOK (soft light, cosy sets, skin/hair, chalk overlays).
+import * as THREE from 'three';
+import { ctx, W, H, clamp, lerp, seg, eo, eio } from './core/lib.js';
+import { L, Le, Wd } from './core/timing.js';
+import { camera } from './core/engine.js';
+import * as WD from './core/world.js';
+import * as W2 from './core/world2.js';
+import * as X from './core/fx2.js';
+import { Toon, drawToon, INK } from './core/toon.js';
+
+const V3 = (x, y, z) => new THREE.Vector3(x, y, z), mix = (a, b, k) => a.clone().lerp(b, k);
+const SK = ['#F6D9B5', '#EBC49A', '#D9A877', '#B98457'];
+const P = (look) => new Toon({ ...look, extra: [...(look.extra || [])] });
+const blink = (t, off = 0) => (((t + off) % 3.3) < 0.12 ? 1 : 0);
+const talk = (t, on = 1) => (on ? 0.25 + 0.75 * Math.abs(Math.sin(t * 13)) * (0.6 + 0.4 * Math.sin(t * 5.3)) : 0);
+const mat = (c, o = {}) => new THREE.MeshStandardMaterial({ color: c, roughness: 0.7, ...o });
+const bx = (w, h, d, c, x, y, z, p) => { const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), typeof c === 'string' ? mat(c) : c); m.position.set(x, y, z); m.castShadow = m.receiveShadow = true; if (p) p.add(m); return m; };
+
+// the robber: juice-shiny face, moustache, blue jacket
+
+
+const FERRO = { body: '#9DB0C4', pattern: 'check', patCol: '#E63946', head: SK[1], hair: 'swoop', hairCol: '#3A2A22', extra: ['glasses', 'freckles'], neck: 'scarf', neckCol: '#E8782B' };
+const LUMEN = { body: '#F2C230', pattern: 'hstripes', patCol: '#D79A12', head: SK[0], hair: 'bald', extra: ['glasses', 'mustache'], neck: 'tie', neckCol: '#2B3A67' };
+const LAMP = (g, x, y) => { g.save(); g.translate(x, y - 20); g.fillStyle = 'rgba(255,230,140,0.35)'; g.beginPath(); g.arc(0, -10, 80, 0, 7); g.fill(); g.fillStyle = '#FFE066'; g.strokeStyle = INK; g.lineWidth = 6; g.beginPath(); g.arc(0, -10, 34, 0, 7); g.fill(); g.stroke(); g.fillStyle = '#8A8A99'; g.fillRect(-18, 24, 36, 26); g.strokeRect(-18, 24, 36, 26); g.restore(); };
+const MAG = (g, x, y) => { g.save(); g.translate(x, y - 20); g.lineWidth = 6; g.strokeStyle = INK; g.fillStyle = '#E63946'; g.beginPath(); g.moveTo(-34, 30); g.lineTo(-34, -6); g.arc(0, -6, 34, Math.PI, 0); g.lineTo(34, 30); g.lineTo(14, 30); g.lineTo(14, -6); g.arc(0, -6, 14, 0, Math.PI, true); g.lineTo(-14, 30); g.closePath(); g.fill(); g.stroke(); g.fillStyle = '#E8E8F0'; g.fillRect(-34, 22, 20, 12); g.fillRect(14, 22, 20, 12); g.restore(); };
+const MOTH = (g, cx, cy, s, flap = 0, col = '#CBB894', op = 1) => { g.save(); g.translate(cx, cy); g.scale(s, s); g.globalAlpha = op; g.lineWidth = 7; g.strokeStyle = INK; const f = 0.75 + 0.25 * Math.sin(flap);
+  [-1, 1].forEach((d) => { g.save(); g.scale(d * f, 1); g.fillStyle = col; g.beginPath(); g.moveTo(10, -10); g.bezierCurveTo(120, -120, 220, -60, 200, 40); g.bezierCurveTo(190, 100, 80, 90, 10, 30); g.closePath(); g.fill(); g.stroke(); g.fillStyle = '#6B5A3A'; g.beginPath(); g.arc(135, -10, 28, 0, 7); g.fill(); g.fillStyle = '#FFF4C8'; g.beginPath(); g.arc(135, -10, 12, 0, 7); g.fill(); g.restore(); });
+  g.fillStyle = '#4A3A24'; g.beginPath(); g.ellipse(0, 10, 22, 60, 0, 0, 7); g.fill(); g.stroke(); g.lineWidth = 6; g.beginPath(); g.moveTo(-8, -46); g.quadraticCurveTo(-40, -100, -70, -96); g.moveTo(8, -46); g.quadraticCurveTo(40, -100, 70, -96); g.stroke(); g.restore(); };
+const sky = (g, a, b) => { const gr = g.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, a); gr.addColorStop(1, b); g.fillStyle = gr; g.fillRect(0, 0, W, H); };
+
+export function buildShots(E) {
+  const S = [], CUES = [], add = (o) => (S.push(o), o), cue = (t, type, o = {}) => CUES.push({ t: +t.toFixed(3), type, ...o });
+  const cut = (i) => (i === 0 ? 0 : L(i) - 0.06);
+  const cam = camera(36);
+  const LK = { bloom: 0.12, bloomThreshold: 0.92 };
+  const shoot = (scene, ppl, from, to, at, k, fov = 36, at2 = null) => { if (cam.fov !== fov) { cam.fov = fov; cam.updateProjectionMatrix(); } cam.position.copy(mix(from, to, k)); cam.lookAt(at2 ? mix(at, at2, k) : at); ppl.forEach((p) => p.face(cam)); E.render(scene, cam, LK); };
+  const SH = (i, o) => { const st = cut(i); add({ id: 'S' + i, at: st, note: o.note || '', draw(lt, d, t, blit) { const k = eio(clamp(lt / d)); if (o.flat) { o.flat(t, lt, k); } else { [ferro, ferroD, lumen, lumenP, ...crowd].forEach((q) => (q.group.visible = false)); o.setup && o.setup(t, lt, k); (o.ppl || []).forEach((q) => (q.group.visible = true)); shoot(o.scene, o.ppl || [], o.from, o.to, o.at, k, o.fov || 38, o.at2 || null); blit(); } o.over && o.over(t, lt, k); } }); cue(st, 'whoosh'); (o.cues || []).forEach((c) => cue(c[0], c[1], c[2] || {})); };
+  const ch = (text, w, o = {}) => (t) => X.chalk(text, 540, o.y || 330, seg(t, w - 0.1, w + 0.3), { size: o.size || 100, col: o.col });
+
+  const mkTown = (night) => { const T = W2.townStreet(E, { night, bank: 'NEON CITY' }); let bz = -9; T.scene.traverse((o) => { if (Math.abs(o.position.x - 5.5) < 0.01 && Math.abs(o.position.y - 3.0) < 0.01) bz = o.position.z; }); T.bz = bz; return T; };
+  const SN = mkTown(true), SD = mkTown(false); const BZ = SN.bz;
+  { const pole = bx(0.2, 6, 0.2, '#5A6270', 2.2, 3, BZ + 2.4, SN.scene); const lamp = new THREE.Mesh(new THREE.SphereGeometry(0.55, 20, 14), new THREE.MeshBasicMaterial({ color: '#FFF2A8' })); lamp.position.set(2.2, 6.3, BZ + 2.4); SN.scene.add(lamp); const pl = new THREE.PointLight('#FFE9A8', 14, 16, 1.3); pl.position.set(2.2, 6.0, BZ + 2.6); SN.scene.add(pl); }
+  const PW = W2.room2(E, { wall: '#3A4F6E', wains: '#25324A', floor: '#6B6B75', posters: [], windows: [], clockAt: null });
+  bx(5.0, 2.8, 0.5, '#8A8F9C', 0, 1.8, -8.6, PW.scene); for (let i = 0; i < 5; i++) { bx(0.2, 0.9, 0.14, '#C9CCD6', -1.8 + i * 0.9, 2.1, -8.3, PW.scene); bx(0.34, 0.12, 0.2, i % 2 ? '#E63946' : '#7CFFB2', -1.8 + i * 0.9, 2.45, -8.2, PW.scene); }
+  const ferro = P(FERRO), ferroD = P(FERRO), lumen = P(LUMEN), crowd = [0, 1, 2].map((i) => P({ body: ['#E8A24A', '#4FA0D8', '#D8607A'][i], head: SK[i], hair: ['curly', 'short', 'bob'][i], hairCol: '#3A2A22' })); const lumenP = P(LUMEN);
+  SN.scene.add(ferro.group, lumen.group, ...crowd.map((c) => c.group)); SD.scene.add(ferroD.group); PW.scene.add(lumenP.group); lumenP.at(0.2, 0, -7.2);
+
+  // 0 hook
+  SH(0, { note: 'dark street, a crossed-out lightning bolt sign', scene: SN.scene, ppl: [ferro], from: V3(0.4, 1.7, BZ + 5.8), to: V3(0.8, 1.7, BZ + 4.6), at: V3(1.0, 1.5, BZ + 1.8), fov: 42, setup: (t) => { lumen.group.visible = false; crowd.forEach((c) => (c.group.visible = false)); ferro.group.visible = true; ferro.at(0.2, 0, BZ + 2.2); ferro.set({ mood: 'worried', legs: 'walk', phase: t * 6, look: [0.4, 0.2], armL: [10, 10], armR: [10, 10], blink: blink(t) }); },
+    over: (t, lt) => { const a = seg(lt, 0.2, 0.7), g = ctx; g.save(); g.globalAlpha = a; g.translate(540, 520); g.scale(0.7 + 0.3 * a, 0.7 + 0.3 * a); g.fillStyle = '#FFD43B'; g.strokeStyle = INK; g.lineWidth = 12; g.beginPath(); g.roundRect(-170, -170, 340, 340, 40); g.fill(); g.stroke(); g.fillStyle = INK; g.beginPath(); g.moveTo(10, -120); g.lineTo(-70, 20); g.lineTo(-5, 20); g.lineTo(-20, 120); g.lineTo(70, -30); g.lineTo(5, -30); g.closePath(); g.fill(); g.strokeStyle = '#E63946'; g.lineWidth = 22; g.beginPath(); g.arc(0, 0, 130, 0, 7); g.moveTo(-92, -92); g.lineTo(92, 92); g.stroke(); g.restore(); ch('NO POWER AFTER DARK', Wd('banned', 0), { size: 78, y: 250 })(t); } });
+  // 1 Ferro
+  SH(1, { note: 'Ferro proud close-up', scene: SN.scene, ppl: [ferro], from: V3(0.3, 1.6, BZ + 4.4), to: V3(0.3, 1.6, BZ + 3.4), at: V3(0.2, 1.6, BZ + 1.0), fov: 36, setup: (t) => { ferro.at(0.2, 0, BZ + 1.0); ferro.set({ mood: 'proud', talk: talk(t), look: [0, 0], blink: blink(t), legs: 'stand', armR: [10, 10], armL: [10, 10] }); }, over: ch('FERRO', Wd('Ferro', 1), { size: 140, col: '#FFD43B' }) });
+  // 2 fridge magnets
+  SH(2, { note: 'Ferro shows a big magnet; suit covered in fridge magnets', scene: SN.scene, ppl: [ferro], from: V3(-0.6, 1.5, BZ + 4.4), to: V3(-0.3, 1.5, BZ + 3.4), at: V3(0.2, 1.5, BZ + 1.0), fov: 38, setup: (t) => { ferro.set({ mood: 'happy', talk: talk(t), look: [0.3, 0], blink: blink(t), legs: 'stand', armR: [120, 40], holdR: MAG, armL: [10, 10] }); }, over: ch('FRIDGE MAGNETS', Wd('fridge', 2), { size: 92 }), cues: [[Wd('fridge', 2), 'magic', { gain: 0.5 }]] });
+  // 3 only one who can fight at night
+  SH(3, { note: 'Ferro hero pose, low camera', scene: SN.scene, ppl: [ferro], from: V3(0.0, 0.6, BZ + 4.2), to: V3(0.2, 0.8, BZ + 3.2), at: V3(0.2, 1.8, BZ + 1.0), fov: 42, setup: (t) => { ferro.set({ mood: 'proud', talk: talk(t), look: [0, 0.3], blink: blink(t), legs: 'stand', armR: [165, 20], holdR: MAG, armL: [30, 20] }); }, over: ch('HERO AT NIGHT', Wd('night.', 3), { size: 100 }) });
+  // 4 Lumen flips every switch
+  SH(4, { note: 'Mister Lumen at the huge switchboard, pulling switches', scene: PW.scene, ppl: [lumenP], from: V3(0.2, 1.7, -4.7), to: V3(0.2, 1.75, -5.4), at: V3(0.2, 1.8, -7.2), fov: 40, setup: (t, lt, k) => { lumenP.set({ mood: 'laugh', talk: talk(t), look: [0, 0.3], blink: blink(t), armR: [160 - 25 * Math.sin(t * 9), 20], armL: [10, 10] }); }, over: ch('EVERY SWITCH', Wd('switch', 4), { size: 100, col: '#FFD43B' }), cues: [[Wd('switch', 4), 'tick', { gain: 0.9 }]] });
+  // 5 streetlights, neon, toasters
+  { const a = Wd('Streetlights.', 5), b = Wd('Neon', 5), c = Wd('toasters.', 5);
+    SH(5, { note: 'three icons pop: lamp, neon sign, toaster', flat: (t, lt) => { sky(ctx, '#1B1B45', '#3A2A6A'); ctx.save(); const g = ctx; const pop = (x, t0, draw) => { const s = eo(seg(t, t0 - 0.05, t0 + 0.25)); if (s <= 0) return; g.save(); g.translate(x, 800); g.scale(s, s); draw(g); g.restore(); };
+      pop(210, a, (g) => { g.fillStyle = 'rgba(255,230,140,0.35)'; g.beginPath(); g.arc(0, -40, 150, 0, 7); g.fill(); LAMP(g, 0, 40); g.save(); g.scale(2.5, 2.5); g.restore(); });
+      pop(540, b, (g) => { g.fillStyle = '#FF4FA3'; g.strokeStyle = INK; g.lineWidth = 10; g.beginPath(); g.roundRect(-150, -90, 300, 180, 30); g.fill(); g.stroke(); g.fillStyle = '#FFFFFF'; g.font = '900 80px Inter'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('OPEN', 0, 0); });
+      pop(870, c, (g) => { g.fillStyle = '#C9CCD6'; g.strokeStyle = INK; g.lineWidth = 10; g.beginPath(); g.roundRect(-120, -70, 240, 150, 30); g.fill(); g.stroke(); g.fillStyle = '#2A2A33'; g.fillRect(-80, -75, 60, 14); g.fillRect(20, -75, 60, 14); g.fillStyle = '#E8782B'; g.beginPath(); g.roundRect(-70, -110, 50, 50, 10); g.fill(); g.stroke(); g.beginPath(); g.roundRect(20, -110, 50, 50, 10); g.fill(); g.stroke(); });
+      g.restore(); }, cues: [[a, 'tick', {}], [b, 'sparkle', { gain: 0.6 }], [c, 'tick', {}]] }); }
+  // 6 everything lit
+  SH(6, { note: 'whole street glows, crowd gasps', scene: SN.scene, ppl: crowd, from: V3(0.6, 1.6, BZ + 6.0), to: V3(0.4, 1.6, BZ + 4.6), at: V3(0.4, 1.5, BZ + 1.2), fov: 44, setup: (t) => { ferro.group.visible = false; crowd.forEach((c, i) => { c.group.visible = true; c.at(-1.0 + i * 1.3, 0, BZ + 1.8); c.set({ mood: 'shock', talk: 0, look: [0, 0.4], blink: blink(t, i), armR: [10, 10], armL: [10, 10] }); }); }, over: (t, lt) => { ctx.save(); ctx.fillStyle = `rgba(255,245,200,${0.55 * (1 - seg(lt, 0, 0.5))})`; ctx.fillRect(0, 0, W, H); ctx.restore(); }, cues: [[cut(6) + 0.05, 'boom', { gain: 0.8 }]] });
+  // 7 sky rumbles
+  SH(7, { note: 'camera tilts up to the sky, shakes', scene: SN.scene, ppl: [], from: V3(0.4 + 0.05, 1.6, BZ + 5.5), to: V3(0.4, 1.6, BZ + 5.5), at: V3(0.4, 4, BZ), at2: V3(0.4, 16, BZ - 6), fov: 52, setup: () => { crowd.forEach((c) => (c.group.visible = false)); }, over: ch('RUMBLE...', Wd('rumble.', 7), { size: 120, col: '#FFD43B' }), cues: [[cut(7) + 0.1, 'riser', { dur: 2, gain: 0.6 }]] });
+  // 8 Ferro runs out
+  SH(8, { note: 'Ferro runs up the street, worried', scene: SN.scene, ppl: [ferro], from: V3(0.3, 1.5, BZ + 6.0), to: V3(0.6, 1.5, BZ + 4.8), at: V3(0.2, 1.4, BZ + 3.0), at2: V3(0.2, 1.4, BZ + 1.4), fov: 42, setup: (t, lt, k) => { ferro.group.visible = true; crowd.forEach((c) => (c.group.visible = false)); ferro.at(0.2, 0, lerp(BZ + 3.6, BZ + 1.0, k)); ferro.set({ mood: 'worried', legs: 'walk', phase: t * 9, look: [0, 0.3], armL: [40, 30], armR: [40, 30], blink: blink(t) }); } });
+  // 9 then it got worse
+  SH(9, { note: 'dark push-in on Ferro, looking up', scene: SN.scene, ppl: [ferro], from: V3(0.5, 1.6, BZ + 4.0), to: V3(0.3, 1.6, BZ + 3.2), at: V3(0.2, 1.6, BZ + 1.0), fov: 34, setup: (t) => { ferro.at(0.2, 0, BZ + 1.0); ferro.set({ mood: 'shock', legs: 'stand', talk: 0, look: [0, 0.9], blink: 0, armR: [10, 10], armL: [10, 10] }); }, cues: [[cut(9) + 0.05, 'riser', { dur: 1.2, gain: 0.5 }]] });
+  // 10 shadows slide
+  SH(10, { note: 'huge dark moth shadows slide across the lit rooftops', scene: SN.scene, ppl: [], from: V3(0.2, 3.2, BZ + 6.5), to: V3(0.2, 3.6, BZ + 5.5), at: V3(0.2, 4.5, BZ), fov: 46, setup: () => { ferro.group.visible = false; }, over: (t, lt, k) => { const g = ctx; g.save(); g.fillStyle = `rgba(10,5,30,${0.35 + 0.25 * k})`; g.fillRect(0, 0, W, H); MOTH(g, lerp(-300, 1500, k), 520 + 50 * Math.sin(t * 2), 3.6, t * 6, '#0B0620', 0.78); MOTH(g, lerp(-700, 1100, k), 900, 2.4, t * 7, '#0B0620', 0.7); g.restore(); } });
+  // 11 bus-sized wings
+  SH(11, { note: 'giant moth next to a tiny bus', flat: (t, lt, k) => { sky(ctx, '#201045', '#4A2A6A'); const g = ctx; g.save(); g.translate(0, 0); MOTH(g, 540, 700, 3.4 + 0.15 * Math.sin(t * 3), t * 6, '#CBB894', 1);
+      g.translate(560, 1220); g.fillStyle = '#FFC107'; g.strokeStyle = INK; g.lineWidth = 8; g.beginPath(); g.roundRect(-150, -60, 300, 100, 22); g.fill(); g.stroke(); g.fillStyle = '#9FD8FF'; for (let i = 0; i < 4; i++) g.fillRect(-120 + i * 62, -42, 46, 36); g.fillStyle = '#2A2A33'; g.beginPath(); g.arc(-90, 42, 24, 0, 7); g.arc(90, 42, 24, 0, 7); g.fill(); g.restore(); }, over: ch('BUS-SIZED', Wd('bus.', 11), { size: 130, col: '#FFD43B' }), cues: [[Wd('Wings,', 11), 'impact', { gain: 0.7 }]] });
+  // 12 crowd hides behind lamps
+  SH(12, { note: 'crowd holds lamps over their heads, huge shadow above', scene: SN.scene, ppl: crowd, from: V3(0.6, 1.5, BZ + 5.2), to: V3(0.3, 1.5, BZ + 4.2), at: V3(0.4, 1.4, BZ + 1.2), fov: 44, setup: (t) => { crowd.forEach((c, i) => { c.group.visible = true; c.at(-1.0 + i * 1.3, 0, BZ + 1.7); c.set({ mood: 'shock', talk: 0, look: [0, 0.3], blink: blink(t, i), armR: [130, 40], holdR: LAMP, armL: [10, 10] }); }); ferro.group.visible = false; }, over: (t, lt) => { ctx.save(); ctx.globalAlpha = 0.55; MOTH(ctx, 540 + 30 * Math.sin(t * 2), 360, 2.2, t * 6, '#0B0620', 0.9); ctx.restore(); } });
+  // 13 magnets don't work
+  SH(13, { note: 'Ferro points a magnet at a giant moth: nothing happens', flat: (t, lt, k) => { sky(ctx, '#201045', '#4A2A6A'); const g = ctx; MOTH(g, 700, 620, 2.8, t * 7); g.save(); g.translate(240, 1250); g.scale(1.6, 1.6); drawToon(g, FERRO, { mood: 'worried', talk: 0, armR: [120, 40], holdR: MAG, armL: [10, 10], blink: blink(t) }); g.restore(); const p = seg(t, Wd('magnets,', 13), Wd('magnets,', 13) + 0.5); g.save(); g.strokeStyle = '#E63946'; g.lineWidth = 8; g.setLineDash([22, 16]); g.globalAlpha = p; g.beginPath(); g.moveTo(360, 1060); g.lineTo(560, 760); g.stroke(); g.restore(); }, over: ch('NO EFFECT', Wd('care', 13), { size: 130, col: '#FF6B6B' }) });
+  // 14 fluff
+  SH(14, { note: 'street covered in moth fluff', scene: SN.scene, ppl: [ferro], from: V3(0.5, 1.6, BZ + 4.2), to: V3(0.3, 1.6, BZ + 3.4), at: V3(0.2, 1.6, BZ + 1.0), fov: 38, setup: (t) => { ferro.group.visible = true; ferro.at(0.2, 0, BZ + 1.0); ferro.set({ mood: 'sad', talk: 0, look: [0, 0], blink: blink(t), legs: 'stand', armR: [60, 40], armL: [60, 40] }); }, over: (t, lt) => { const g = ctx; g.save(); for (let i = 0; i < 70; i++) { const x = (i * 193 + t * 30 * ((i % 5) + 1)) % W, y = (i * 311 + t * 90 * ((i % 4) + 1)) % H; g.fillStyle = `rgba(250,248,240,${0.4 + (i % 3) * 0.2})`; g.beginPath(); g.arc(x, y, 8 + (i % 6) * 4, 0, 7); g.fill(); } g.restore(); ch('FLUFF EVERYWHERE', Wd('fluff.', 14), { size: 84 })(t); } });
+  // 15 every light still on
+  SH(15, { note: 'lamp with moths circling', flat: (t) => { sky(ctx, '#15153A', '#2B2A5A'); const g = ctx; g.save(); g.fillStyle = 'rgba(255,230,140,0.25)'; g.beginPath(); g.arc(540, 900, 380, 0, 7); g.fill(); g.restore(); LAMP(g, 540, 940); for (let i = 0; i < 5; i++) { const a = t * 1.6 + i * 1.26; MOTH(g, 540 + Math.cos(a) * 330, 860 + Math.sin(a) * 150, 0.8, t * 12 + i, '#CBB894'); } }, over: ch('ALL LIGHTS ON', Wd('light', 15), { size: 100 }) });
+  // 16 biggest lamp
+  SH(16, { note: 'Ferro looks up at the biggest lamp on a steel pole', scene: SN.scene, ppl: [ferro], from: V3(-1.0, 1.4, BZ + 5.4), to: V3(-0.2, 1.5, BZ + 4.4), at: V3(1.4, 3.8, BZ + 2.4), fov: 48, setup: (t) => { ferro.at(0.2, 0, BZ + 2.6); ferro.set({ mood: 'sly', talk: 0, look: [0.8, 0.9], blink: blink(t), legs: 'stand', armR: [10, 10], armL: [10, 10] }); }, over: ch('BIGGEST LAMP', Wd('biggest', 16), { y: 980, size: 100, col: '#FFD43B' }), cues: [[Wd('biggest', 16), 'sparkle', { gain: 0.6 }]] });
+  // 17 stuck to back and ran
+  SH(17, { note: 'Ferro runs with the lamp stuck to his back, moths chase', scene: SN.scene, ppl: [ferro], from: V3(1.6, 1.5, BZ + 6.4), to: V3(0.2, 1.5, BZ + 5.0), at: V3(0.2, 1.5, BZ + 1.2), fov: 44, setup: (t, lt, k) => { ferro.at(lerp(2.0, -1.0, k), 0, BZ + 1.2); ferro.set({ mood: 'happy', talk: 0, legs: 'walk', phase: t * 10, look: [0, 0], armR: [130, 30], armL: [30, 40], holdR: LAMP, blink: blink(t) }); }, over: (t, lt, k) => { MOTH(ctx, lerp(1300, 700, k), 400, 1.2, t * 9, '#CBB894', 0.9); MOTH(ctx, lerp(1500, 900, k), 700, 1.6, t * 10, '#CBB894', 0.9); }, cues: [[cut(17) + 1.5, 'whoosh', { gain: 0.6 }]] });
+  // 18 moths follow the glow over the sea
+  SH(18, { note: 'night harbor: lamp-carrier running on a pier, moths stream out over the sea', flat: (t, lt, k) => { sky(ctx, '#0B1030', '#1E3A6A'); const g = ctx; g.fillStyle = '#F4F1EA'; g.beginPath(); g.arc(850, 340, 90, 0, 7); g.fill(); g.fillStyle = '#183560'; g.fillRect(0, 1100, W, 820); g.fillStyle = 'rgba(255,255,255,0.25)'; for (let i = 0; i < 12; i++) g.fillRect(100 + i * 80, 1180 + (i % 4) * 90, 60, 8);
+      const x = lerp(160, 760, k); g.save(); g.fillStyle = 'rgba(255,230,140,0.3)'; g.beginPath(); g.arc(x, 960, 220, 0, 7); g.fill(); g.restore(); for (let i = 0; i < 9; i++) MOTH(g, x + 240 + i * 90 + 60 * Math.sin(t * 2 + i), 700 + (i % 3) * 120, 0.9 - i * 0.05, t * 10 + i, '#CBB894'); g.save(); g.translate(x - 100, 1160); g.scale(1.2, 1.2); drawToon(g, FERRO, { mood: 'happy', talk: 0, legs: 'walk', phase: t * 10, armR: [130, 30], holdR: LAMP, armL: [30, 40], blink: 0 }); g.restore(); }, over: ch('OVER THE SEA', Wd('sea.', 18), { size: 100 }) });
+  // 19 moths steer by the brightest light
+  SH(19, { note: 'chalk board: MOTH -> BRIGHTEST LIGHT', flat: (t) => { sky(ctx, '#1F4D3A', '#183A2C'); const g = ctx; const w1 = Wd('steer', 19), w2 = Wd('brightest', 19); MOTH(g, 270, 820, 0.9, t * 8, '#CBB894', seg(t, cut(19) - cut(19), 0.4)); X.arrow(380, 820, 640, 820, seg(t, w1 - 0.1, w1 + 0.4), {}); const a = seg(t, w2 - 0.1, w2 + 0.3); g.save(); g.globalAlpha = a; g.fillStyle = 'rgba(255,230,140,0.3)'; g.beginPath(); g.arc(800, 800, 170, 0, 7); g.fill(); LAMP(g, 800, 840); g.restore(); }, over: (t) => { ch('MOTHS STEER BY LIGHT', Wd('steer', 19), { size: 74, y: 330 })(t); }, cues: [[Wd('steer', 19), 'magic', { gain: 0.6 }]] });
+  // 20 that's why they circle
+  SH(20, { note: 'moths circle a lamp', flat: (t) => { sky(ctx, '#15153A', '#2B2A5A'); const g = ctx; g.save(); g.fillStyle = 'rgba(255,230,140,0.25)'; g.beginPath(); g.arc(540, 960, 330, 0, 7); g.fill(); g.restore(); LAMP(g, 540, 1000); for (let i = 0; i < 6; i++) { const a = t * 2.0 + i * 1.05; MOTH(g, 540 + Math.cos(a) * 300, 930 + Math.sin(a) * 110, 0.7, t * 12 + i); } }, over: ch('THAT IS WHY THEY CIRCLE', Wd('circle', 20), { size: 66 }) });
+  // 21 dawn, lights off
+  SH(21, { note: 'sunny street, Ferro flips the last light off', scene: SD.scene, ppl: [ferroD], from: V3(0.3, 1.6, BZ + 5.0), to: V3(0.3, 1.6, BZ + 3.8), at: V3(0.2, 1.6, BZ + 1.2), fov: 38, setup: (t) => { ferroD.at(0.2, 0, BZ + 1.2); ferroD.set({ mood: 'happy', talk: talk(t), look: [0.2, 0], blink: blink(t), legs: 'stand', armR: [150 + Math.sin(t * 8) * 10, 20], armL: [10, 10] }); }, over: ch('LIGHTS OFF', Wd('off.', 21), { size: 118, col: '#7CFFB2' }), cues: [[Wd('off.', 21), 'tick', { gain: 0.9 }]] });
+  // 22 loop
+  SH(22, { note: 'back to the dark street, no-power sign', scene: SN.scene, ppl: [ferro], from: V3(0.4, 1.7, BZ + 5.8), to: V3(0.8, 1.7, BZ + 4.6), at: V3(1.0, 1.5, BZ + 1.8), fov: 42, setup: (t) => { ferro.group.visible = true; ferro.at(0.2, 0, BZ + 2.2); ferro.set({ mood: 'proud', legs: 'walk', phase: t * 6, look: [0.4, 0], armL: [10, 10], armR: [10, 10], blink: blink(t), talk: 0 }); }, over: ch('NO POWER AFTER DARK', Wd('dark.', 22), { size: 78 }) });
+
+  S.sort((a, b) => a.at - b.at);
+  return { shots: S, cues: CUES, ambience: [{ type: 'city', from: 0, to: 4 }] };
+}
