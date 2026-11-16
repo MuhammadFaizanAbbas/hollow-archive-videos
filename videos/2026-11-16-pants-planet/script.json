@@ -1,0 +1,110 @@
+{
+ "title": "The Planet Where Pants Are Illegal",
+ "voice": "am_puck",
+ "speed": 1.08,
+ "lead": 0.2,
+ "outro": 0.8,
+ "gap": 0.12,
+ "music": "bounce",
+ "music2": "story",
+ "music2_at": 35.7,
+ "gate": "7/7",
+ "sources": [
+  "Original fiction (SCIFI world-rule). Real idea used loosely: many insects, including moths, seek dark, sheltered, folded spots to rest and nest (Smithsonian / Natural History Museum notes on moth roosting behaviour)."
+ ],
+ "ambience": [
+  {
+   "type": "city",
+   "from": 0,
+   "to": 14
+  },
+  {
+   "type": "forest",
+   "from": 18.3,
+   "to": 35.7
+  },
+  {
+   "type": "city",
+   "from": 44.7,
+   "to": 47
+  }
+ ],
+ "lines": [
+  {
+   "text": "On this planet, wearing pants is against the law,"
+  },
+  {
+   "text": "and nobody will tell the settlers why."
+  },
+  {
+   "text": "Mia landed on Tuesday, in her favourite jeans."
+  },
+  {
+   "text": "The locals stared at her legs."
+  },
+  {
+   "text": "Every single one."
+  },
+  {
+   "text": "A kid gasped, she's wearing pants!"
+  },
+  {
+   "text": "The mayor ran over, sweating."
+  },
+  {
+   "text": "Take them off, he begged, right now!"
+  },
+  {
+   "text": "But Mia checked the rulebook."
+  },
+  {
+   "text": "Page one, line one: no pants."
+  },
+  {
+   "text": "She laughed. Who bans pants?"
+  },
+  {
+   "text": "So she wore them to the picnic anyway."
+  },
+  {
+   "text": "And that wasn't the strange part."
+  },
+  {
+   "text": "At noon, the whole sky started humming."
+  },
+  {
+   "text": "Then something glowed in the grass."
+  },
+  {
+   "text": "Then ten somethings. Then a thousand."
+  },
+  {
+   "text": "They were all flying straight at her legs."
+  },
+  {
+   "text": "She ran, but a glowing cloud followed every step."
+  },
+  {
+   "text": "The mayor covered his eyes."
+  },
+  {
+   "text": "By sunset, her jeans were buzzing, glowing, and completely full."
+  },
+  {
+   "text": "See, glow-moths love nesting in dark, folded cloth,",
+   "gap": 0.4
+  },
+  {
+   "text": "and her jeans held a million of them."
+  },
+  {
+   "text": "The moths wouldn't leave for a whole week."
+  },
+  {
+   "text": "So the very first law was, shorts only."
+  },
+  {
+   "text": "Which is why, on this planet,"
+  }
+ ]
+}
