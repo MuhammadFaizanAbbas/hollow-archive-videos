@@ -1,0 +1,80 @@
+{
+ "title": "Mars Base 7, Part 6: The Canyon",
+ "type": "SCIFI",
+ "series": "Mars Base 7",
+ "part": 6,
+ "sol": 6,
+ "gate": "7/7",
+ "lead": 0.1,
+ "outro": 2.8,
+ "gap": 0.12,
+ "voice": "am_michael",
+ "speed": 1.0,
+ "music": "tension",
+ "ambience": [
+  {
+   "type": "night",
+   "from": 0,
+   "to": 90,
+   "gain": 0.5
+  }
+ ],
+ "sources": [
+  "Characters, bases and events are fictional (SCIFI series)"
+ ],
+ "airAt": [
+  5,
+  71.56,
+  4
+ ],
+ "lines": [
+  {
+   "text": "Mars Base Seven. Sol six. Mei, Tomas, Pip, and me, driving to the canyon."
+  },
+  {
+   "text": "Tomas took the rover. Mei sat in the back, holding the seed tin, and said nothing."
+  },
+  {
+   "text": "Pip rode on the dashboard, beeping, Hiro, Hiro, Hiro."
+  },
+  {
+   "text": "The oxygen counter said five sols."
+  },
+  {
+   "text": "Lena's voice crackled on the radio: Keep left of the red rocks. Then follow the lights."
+  },
+  {
+   "text": "And then we saw them. A row of tiny lights, high on the canyon wall, blinking in the same pattern as Mei's note."
+  },
+  {
+   "text": "Base Three was real. And it was awake."
+  },
+  {
+   "text": "Tomas stopped the rover and whispered, Nobody touches anything."
+  },
+  {
+   "text": "But Mei was already running."
+  },
+  {
+   "text": "She knocked on the door. Three slow knocks, like the Morse machine."
+  },
+  {
+   "text": "And from the other side, someone knocked back."
+  },
+  {
+   "text": "The door slid open. A tired man in an old orange suit stood there, with Mei's eyes."
+  },
+  {
+   "text": "Mei, he said. You came close. Good."
+  },
+  {
+   "text": "Then he looked past us, into the dark canyon, and went pale."
+  },
+  {
+   "text": "Quick, everyone inside. Don't say a word. It heard you arrive."
+  },
+  {
+   "text": "The oxygen counter said four sols."
+  }
+ ]
+}
