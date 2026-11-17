@@ -327,3 +327,6 @@ Goal: highest click-through rate. The viewer should think "I'd NEVER do that, le
 Any step that fails twice → Log row `FAILED` with the reason in Notes, idea back to `NEW` (unless the video was already
 uploaded), one-line message to the owner, stop. Never upload a video whose QA you skipped. Never upload anything except
 the rendered short.
+
+## Music for Shorts (owner rule, 2026-11-18)
+Every Short uses the owner's music bed: assets/music/owner_bed.m4a, mixed with assets/music/mix_short.sh (music ducks under the narration, starts 20 s into the track). Do not use the built-in synthesized music beds for Shorts. If the narration is longer than ~150 s pass a different start offset so the bed does not run out (track is 3:04).
