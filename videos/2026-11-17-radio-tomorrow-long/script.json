@@ -1,0 +1,305 @@
+{
+ "title": "The Radio That Knew Tomorrow (Long)",
+ "voice": "am_puck",
+ "speed": 1.05,
+ "lead": 0.3,
+ "outro": 1.5,
+ "gap": 0.1,
+ "music": "story",
+ "sources": [
+  "Original fiction (SCIFI, 'the science is real'). All characters, towns and the radio station are invented.",
+  "Wikipedia, 'Time in Kiribati' (Line Islands, UTC+14:00, the most advanced time zone in the world); timeanddate.com 'International Date Line' (Baker Island at UTC-12, Tokelau and Samoa on the west side; 25 hours when crossing)",
+  "Wikipedia, 'Time in Samoa' (Samoa skipped Friday 30 December 2011, going from Thursday 29 December to Saturday 31 December, to align with Australia and New Zealand)",
+  "Wikipedia, 'Skywave' (shortwave signals are bent back by the ionosphere and skip across oceans; best below about 10 MHz at night)",
+  "General knowledge: a tsunami crosses a deep ocean about as fast as a jet airliner (NOAA; page not retrievable in this run), radio travels at light speed."
+ ],
+ "lines": [
+  {
+   "text": "The old radio said it was Tuesday."
+  },
+  {
+   "text": "It was Monday."
+  },
+  {
+   "text": "By the end of that week, a whole town stood on a hill, in their pyjamas,"
+  },
+  {
+   "text": "and every one of them was there because of that radio."
+  },
+  {
+   "text": "But to understand how, we need to go back a few days."
+  },
+  {
+   "text": "Meet Mari Vega. Fourteen years old, and the best radio fixer in Port Lantern."
+  },
+  {
+   "text": "Her grandpa Tito owned the shop, a tiny place stuffed with dusty wires."
+  },
+  {
+   "text": "He had exactly one rule: never buy a radio that smells like fish."
+  },
+  {
+   "text": "So on Saturday, Mari bought a radio that smelled like fish."
+  },
+  {
+   "text": "It was huge, and wooden, and ugly, with one cracked dial."
+  },
+  {
+   "text": "The old sailor at the flea market sold it for three coins,"
+  },
+  {
+   "text": "and left before she could change her mind."
+  },
+  {
+   "text": "She dragged it home, scrubbed it clean, and plugged it in."
+  },
+  {
+   "text": "Nothing. Just static. Like bacon frying."
+  },
+  {
+   "text": "She tried every knob. Still nothing."
+  },
+  {
+   "text": "Until Monday evening, at seven o'clock, one last turn of the dial,"
+  },
+  {
+   "text": "and a cheerful voice said, Good evening! It's Tuesday!"
+  },
+  {
+   "text": "Mari checked the calendar. Monday."
+  },
+  {
+   "text": "She checked her phone. Monday."
+  },
+  {
+   "text": "She checked her grandpa. He said Monday, and had she eaten?"
+  },
+  {
+   "text": "So either the radio was broken, or it knew something she didn't."
+  },
+  {
+   "text": "The voice kept chatting. A big storm just crossed our island, heading east. Rain by breakfast."
+  },
+  {
+   "text": "Mari rolled her eyes, and went to bed."
+  },
+  {
+   "text": "At breakfast, it rained."
+  },
+  {
+   "text": "Okay. Lucky guess. But that wasn't the strange part."
+  },
+  {
+   "text": "That night, the radio read out a football score."
+  },
+  {
+   "text": "The Reef Sharks beat the Palm Crabs, three to one."
+  },
+  {
+   "text": "The newspaper didn't print it until the next morning."
+  },
+  {
+   "text": "Her friend Dev bet his lunch money on the Sharks, and ate like a king."
+  },
+  {
+   "text": "Then the radio named the winner of the Great Pie Contest. Lemon meringue, by Mrs. Okoye."
+  },
+  {
+   "text": "By Thursday, Dev had told the school, and the school had told the town."
+  },
+  {
+   "text": "A line stretched outside the shop. Forty people. Then a hundred."
+  },
+  {
+   "text": "One man brought a goat, for some reason."
+  },
+  {
+   "text": "Everyone wanted tomorrow's news, and everyone wanted it first."
+  },
+  {
+   "text": "Mayor Pruitt offered a thousand coins for the radio."
+  },
+  {
+   "text": "Mari said no. Her grandpa said nothing. He just frowned at the dial."
+  },
+  {
+   "text": "Radios don't know tomorrow, mija, he muttered. So what is it listening to?"
+  },
+  {
+   "text": "That night, the radio went quiet. Then the voice came back, shaking."
+  },
+  {
+   "text": "Emergency! A giant wave is racing across the ocean!"
+  },
+  {
+   "text": "It smashed our docks this morning, and it's heading east. Every coast, get to high ground!"
+  },
+  {
+   "text": "Mari froze. Port Lantern was east."
+  },
+  {
+   "text": "And that radio had never been wrong. Not once."
+  },
+  {
+   "text": "She had about three hours."
+  },
+  {
+   "text": "She ran into the street and shouted, everybody up the hill!"
+  },
+  {
+   "text": "And for once, everybody listened, mostly because of the pie."
+  },
+  {
+   "text": "Grandma carried her cat. Dev carried a toaster. The goat carried nothing, but it led the way."
+  },
+  {
+   "text": "They climbed in the dark, hundreds of people in pyjamas."
+  },
+  {
+   "text": "Then they waited. And waited."
+  },
+  {
+   "text": "At ten o'clock, the sea went strangely quiet."
+  },
+  {
+   "text": "Then the harbour rose, and rose, and swallowed the docks,"
+  },
+  {
+   "text": "and spilled into the streets, and lifted the boats like toys."
+  },
+  {
+   "text": "But every single person was safe, up on that hill."
+  },
+  {
+   "text": "A radio had saved a whole town. But how?"
+  },
+  {
+   "text": "The next morning, Mari and Tito unrolled his old map of the world."
+  },
+  {
+   "text": "There's a line, he said, drawn through the middle of the ocean. The date line."
+  },
+  {
+   "text": "Cross it going west, and you skip straight into tomorrow."
+  },
+  {
+   "text": "Inside the radio, Mari found a faded sticker. Radio Sunrise, on a tiny island, just past that line."
+  },
+  {
+   "text": "And that island? It sits twenty-two hours ahead of Port Lantern."
+  },
+  {
+   "text": "See, the radio never saw tomorrow.",
+   "gap": 0.4
+  },
+  {
+   "text": "It only heard a place where tomorrow had already started."
+  },
+  {
+   "text": "At night, radio waves bounce off the sky like skipping stones, all the way across the ocean."
+  },
+  {
+   "text": "Their news raced here at the speed of light. The wave was only as fast as a jet."
+  },
+  {
+   "text": "Which gave Port Lantern just enough time to run."
+  },
+  {
+   "text": "And the date line gets weirder. In twenty eleven, the country of Samoa jumped across it,"
+  },
+  {
+   "text": "and skipped Friday the thirtieth of December. On purpose. That part is real."
+  },
+  {
+   "text": "Mari mailed the island a thank you letter, with a very big drawing of a wave."
+  },
+  {
+   "text": "A month later, a reply arrived."
+  },
+  {
+   "text": "Dear Mari, thank you! We read your letter on Tuesday, and it confused everyone."
+  },
+  {
+   "text": "Because according to our calendar, you're from yesterday."
+  },
+  {
+   "text": "So the old radio said it was Tuesday, and Mari said it was Monday."
+  },
+  {
+   "text": "And the funny thing? They were both right."
+  },
+  {
+   "text": "If you liked this, the Hollow Archive has a new story every day."
+  }
+ ],
+ "music2": "epic",
+ "gate": "7/7",
+ "ambience": [
+  {
+   "type": "night",
+   "from": 2.93,
+   "to": 12.03
+  },
+  {
+   "type": "city",
+   "from": 12.13,
+   "to": 24.43
+  },
+  {
+   "type": "forest",
+   "from": 24.53,
+   "to": 36.23
+  },
+  {
+   "type": "sea",
+   "from": 59.18,
+   "to": 64.28
+  },
+  {
+   "type": "night",
+   "from": 64.38,
+   "to": 66.07
+  },
+  {
+   "type": "rain",
+   "from": 66.17,
+   "to": 69.93
+  },
+  {
+   "type": "crowd",
+   "from": 85.81,
+   "to": 107.81
+  },
+  {
+   "type": "sea",
+   "from": 114.45,
+   "to": 118.96
+  },
+  {
+   "type": "night",
+   "from": 124.67,
+   "to": 139.75
+  },
+  {
+   "type": "sea",
+   "from": 139.85,
+   "to": 147.85
+  },
+  {
+   "type": "night",
+   "from": 147.95,
+   "to": 152.5
+  },
+  {
+   "type": "sea",
+   "from": 174.18,
+   "to": 176.99
+  },
+  {
+   "type": "city",
+   "from": 198.45,
+   "to": 203.89
+  }
+ ],
+ "music2_at": 111.38
+}
