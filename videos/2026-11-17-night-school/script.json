@@ -1,0 +1,95 @@
+{
+ "title": "The Moon Where Kids Only Study at Night",
+ "voice": "am_puck",
+ "speed": 1.08,
+ "lead": 0.2,
+ "outro": 0.8,
+ "gap": 0.12,
+ "music": "bounce",
+ "music2": "story",
+ "music2_at": 28.6,
+ "gate": "7/7",
+ "sources": [
+  "Original fiction (SCIFI world-rule). Real idea used loosely: flickering light can disrupt attention and memory, and sleep helps lock in what you learned (NIH / NIMH sleep and memory notes; NASA notes on twin-star systems)."
+ ],
+ "ambience": [
+  {
+   "type": "night",
+   "from": 0,
+   "to": 11.9
+  },
+  {
+   "type": "forest",
+   "from": 11.9,
+   "to": 34
+  },
+  {
+   "type": "city",
+   "from": 34,
+   "to": 44
+  }
+ ],
+ "lines": [
+  {
+   "text": "On this moon, kids study at night, and sleep all day."
+  },
+  {
+   "text": "Study in the daytime, and you forget everything."
+  },
+  {
+   "text": "Nina landed on Monday, and thought that sounded ridiculous."
+  },
+  {
+   "text": "The teacher begged her, don't open a book before sunset!"
+  },
+  {
+   "text": "But Nina loved mornings."
+  },
+  {
+   "text": "So she sat under a tree at ten o'clock, and studied."
+  },
+  {
+   "text": "And that wasn't the strange part."
+  },
+  {
+   "text": "By lunch, she forgot her own name."
+  },
+  {
+   "text": "Then she forgot the whole alphabet. Twice."
+  },
+  {
+   "text": "Her classmates watched through the window, hugging their pillows."
+  },
+  {
+   "text": "By noon, her notebook was blank, and so was her face."
+  },
+  {
+   "text": "The teacher sighed. Told you."
+  },
+  {
+   "text": "But Nina squinted at the sky, and noticed something."
+  },
+  {
+   "text": "See, this moon's twin suns flicker forty times a second,",
+   "gap": 0.4
+  },
+  {
+   "text": "and that flicker scrambles your short-term memory."
+  },
+  {
+   "text": "So she put on dark crystal glasses,"
+  },
+  {
+   "text": "and studied all day, in full sunshine."
+  },
+  {
+   "text": "She topped the entire school."
+  },
+  {
+   "text": "And the teacher? He borrowed her glasses."
+  },
+  {
+   "text": "Which is why, on this moon,"
+  }
+ ]
+}

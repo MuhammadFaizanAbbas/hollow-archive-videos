@@ -1,0 +1,42 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>@font-face{font-family:'Inter';font-weight:900;src:url('fonts/Inter-Black.otf');} html,body{margin:0;background:#000} canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/"}}</script></head>
+<body><canvas id="c" width="2160" height="3840"></canvas>
+<script type="module">
+import { drawToon, INK } from './src/core/toon.js';
+const c = document.getElementById('c'), g = c.getContext('2d'), W = 2160, H = 3840;
+const R = (s) => { let x = Math.sin(s * 127.1) * 43758.5453; return x - Math.floor(x); };
+await document.fonts.load('900 100px Inter');
+// 1. sky: deep night blue on the bottom half, blazing day on top
+let gr = g.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, '#59B8F0'); gr.addColorStop(0.45, '#BFE6FA'); gr.addColorStop(0.55, '#2A3C88'); gr.addColorStop(1, '#0C1440'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+for (let i = 0; i < 160; i++) { g.fillStyle = `rgba(255,255,255,${0.3 + R(i * 9) * 0.6})`; g.beginPath(); g.arc(R(i) * W, H * 0.55 + R(i * 3.3) * H * 0.45, 2 + R(i * 7) * 6, 0, 7); g.fill(); }
+// 2. two suns with rays
+const sun = (x, y, r, col) => { const gg = g.createRadialGradient(x, y, r * 0.5, x, y, r * 3.2); gg.addColorStop(0, 'rgba(255,235,150,0.9)'); gg.addColorStop(1, 'rgba(255,220,120,0)'); g.fillStyle = gg; g.fillRect(x - r * 3.4, y - r * 3.4, r * 6.8, r * 6.8);
+  g.save(); g.translate(x, y); g.globalCompositeOperation = 'screen'; for (let i = 0; i < 14; i++) { g.rotate(Math.PI * 2 / 14); g.fillStyle = 'rgba(255,240,170,0.13)'; g.beginPath(); g.moveTo(0, 0); g.lineTo(-80, -2000); g.lineTo(80, -2000); g.closePath(); g.fill(); } g.restore();
+  g.fillStyle = col; g.strokeStyle = INK; g.lineWidth = 20; g.beginPath(); g.arc(x, y, r, 0, 7); g.fill(); g.stroke(); };
+sun(1560, 1180, 190, '#FFD43B'); sun(700, 1300, 140, '#FF9A3C');
+// 3. HERO: open book whose words are fading into nothing
+const rx = W / 2, ry = 2150;
+g.save(); g.translate(rx, ry); g.rotate(-0.05); g.shadowColor = 'rgba(0,0,0,0.5)'; g.shadowBlur = 60; g.shadowOffsetY = 30;
+g.fillStyle = '#FBF6E8'; g.strokeStyle = INK; g.lineWidth = 24; g.lineJoin = 'round'; g.beginPath(); g.roundRect(-760, -420, 1520, 840, 40); g.fill(); g.shadowColor = 'transparent'; g.stroke();
+g.beginPath(); g.moveTo(0, -420); g.lineTo(0, 420); g.stroke();
+g.lineCap = 'round'; [-250, -120, 10, 140, 270].forEach((y, i) => { [[-680, -80], [80, 680]].forEach(([x0, x1], side) => { const fade = side ? 1 - i / 4 : 1; g.strokeStyle = `rgba(60,60,85,${0.15 + 0.7 * fade})`; g.lineWidth = 22; g.beginPath(); g.moveTo(x0, y); g.lineTo(x0 + (x1 - x0) * (0.4 + 0.6 * fade * (1 - i * 0.05)), y); g.stroke(); }); });
+g.fillStyle = '#E63946'; g.strokeStyle = INK; g.lineWidth = 16; g.beginPath(); g.arc(540, -330, 130, 0, 7); g.fill(); g.stroke(); g.fillStyle = '#fff'; g.font = '900 190px Inter'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('?', 540, -318);
+g.restore();
+// swirl
+g.save(); g.strokeStyle = '#fff'; g.lineWidth = 26; g.lineCap = 'round'; g.beginPath(); for (let i = 0; i < 100; i++) { const a = i * 0.3, r = 10 + i * 4.2; const px = 1700 + Math.cos(a) * r, py = 3000 + Math.sin(a) * r * 0.8; i ? g.lineTo(px, py) : g.moveTo(px, py); } g.stroke(); g.restore();
+// 5. Nina: dizzy and huge, bottom left
+g.save(); g.translate(250, 2560); g.scale(3.5, 3.5);
+drawToon(g, { body: '#F28C3A', head: '#D9A877', hair: 'long', hairCol: '#2A1A14', extra: ['blush'], neck: 'collar' }, { mood: 'dizzy', look: [0.6, -0.5], talk: 0.8, sweat: 1, armL: [10, 6], armR: [10, 6] });
+g.restore();
+gr = g.createRadialGradient(W / 2, H * 0.5, H * 0.3, W / 2, H * 0.5, H * 0.75); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,0.45)'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+// 6. text
+const word = (s, x, y, size, fill, glow, rot) => { g.save(); g.translate(x, y); g.rotate(rot); g.font = `900 ${size}px Inter`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
+  g.fillStyle = 'rgba(0,0,0,0.55)'; g.fillText(s, 14, 30); g.lineWidth = size * 0.2; g.strokeStyle = '#0B0B14'; g.strokeText(s, 0, 0); if (glow) { g.shadowColor = glow; g.shadowBlur = 70; } g.fillStyle = fill; g.fillText(s, 0, 0); g.shadowBlur = 0; g.restore(); };
+const fit = (s, size, maxW) => { g.font = `900 ${size}px Inter`; return Math.min(size, size * maxW / g.measureText(s).width); };
+word('STUDY IN THE', W / 2, 360, fit('STUDY IN THE', 330, 1950), '#FFFFFF', '#2A6BFF', -0.04);
+word('DAY? NEVER!', W / 2, 720, fit('DAY? NEVER!', 420, 1850), '#FFD43B', null, -0.04);
+g.save(); g.translate(1800, 3560); g.rotate(0.07); g.fillStyle = '#E63946'; g.strokeStyle = '#0B0B14'; g.lineWidth = 12; g.beginPath(); g.roundRect(-190, -60, 380, 120, 26); g.fill(); g.stroke();
+g.fillStyle = '#FFFFFF'; g.font = '900 80px Inter'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('SCI-FI', 0, 6); g.restore();
+document.title = 'DONE';
+</script></body></html>
