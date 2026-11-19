@@ -1,0 +1,43 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>@font-face{font-family:'Inter';font-weight:900;src:url('fonts/Inter-Black.otf');} html,body{margin:0;background:#000} canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/"}}</script></head>
+<body><canvas id="c" width="2160" height="3840"></canvas>
+<script type="module">
+import { drawToon, INK } from './src/core/toon.js';
+const c = document.getElementById('c'), g = c.getContext('2d'), W = 2160, H = 3840;
+const R = (s) => { let x = Math.sin(s * 127.1) * 43758.5453; return x - Math.floor(x); };
+await document.fonts.load('900 100px Inter');
+let gr = g.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, '#1E1A5E'); gr.addColorStop(0.45, '#C0508E'); gr.addColorStop(1, '#F7A870'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+for (let i = 0; i < 50; i++) { g.fillStyle = `rgba(255,255,255,${0.4 + R(i) * 0.6})`; g.beginPath(); g.arc(R(i * 2) * W, R(i * 5) * 1700, 3 + R(i * 7) * 8, 0, 7); g.fill(); }
+g.fillStyle = '#F6E9CC'; g.beginPath(); g.arc(1760, 1250, 180, 0, 7); g.fill();
+const hx = W / 2 + 160, hy = 1900;
+gr = g.createRadialGradient(hx, hy, 80, hx, hy, 1500); gr.addColorStop(0, 'rgba(255,230,150,0.9)'); gr.addColorStop(0.4, 'rgba(255,180,110,0.4)'); gr.addColorStop(1, 'rgba(255,150,90,0)'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+g.fillStyle = '#E0A070'; g.beginPath(); g.moveTo(0, 3050); g.quadraticCurveTo(W / 2, 2850, W, 3050); g.lineTo(W, H); g.lineTo(0, H); g.fill();
+// HERO: the sand giant standing up out of a hill, dancing
+g.save(); g.translate(hx, hy); g.scale(0.85, 0.85); g.lineJoin = 'round'; g.lineCap = 'round'; g.strokeStyle = INK; g.lineWidth = 34; g.shadowColor = 'rgba(0,0,0,0.4)'; g.shadowBlur = 60; g.shadowOffsetY = 40;
+const sand = '#E8B06A';
+[[-1, -1], [1, 1]].forEach(([s, up]) => { g.fillStyle = sand; g.beginPath(); g.moveTo(s * 600, -150); g.quadraticCurveTo(s * 900, -420, s * 860, -760 + (s > 0 ? 80 : 0)); g.lineTo(s * 700, -760 + (s > 0 ? 80 : 0)); g.quadraticCurveTo(s * 700, -420, s * 480, -60); g.closePath(); g.fill(); g.stroke(); });
+g.fillStyle = sand; g.beginPath(); g.ellipse(0, 0, 640, 760, 0, 0, 7); g.fill(); g.shadowColor = 'transparent'; g.stroke();
+g.fillStyle = 'rgba(190,130,70,0.55)'; [[-300, -380, 120], [260, 250, 150], [-120, 380, 110]].forEach(([x, y, r]) => { g.beginPath(); g.arc(x, y, r, 0, 7); g.fill(); });
+g.fillStyle = 'rgba(255,255,255,0.3)'; g.beginPath(); g.ellipse(-280, -520, 180, 70, -0.5, 0, 7); g.fill();
+[-230, 230].forEach((x) => { g.fillStyle = '#FFF'; g.lineWidth = 26; g.beginPath(); g.arc(x, -190, 150, 0, 7); g.fill(); g.stroke(); g.fillStyle = INK; g.beginPath(); g.arc(x - 30, -170, 70, 0, 7); g.fill(); g.fillStyle = '#FFF'; g.beginPath(); g.arc(x - 50, -195, 22, 0, 7); g.fill(); });
+g.strokeStyle = INK; g.lineWidth = 30; g.beginPath(); g.arc(0, 90, 210, 0.2, Math.PI - 0.2); g.stroke();
+g.restore();
+// whistle notes flying out toward the giant
+const note = (x, y, s, col) => { g.save(); g.translate(x, y); g.scale(s, s); g.fillStyle = col; g.strokeStyle = INK; g.lineWidth = 12; g.lineJoin = 'round'; g.beginPath(); g.ellipse(0, 0, 62, 46, -0.45, 0, 7); g.fill(); g.stroke();
+  g.fillRect(50, -230, 20, 230); g.strokeRect(50, -230, 20, 230); g.beginPath(); g.moveTo(70, -230); g.quadraticCurveTo(170, -190, 160, -110); g.lineTo(130, -120); g.quadraticCurveTo(130, -170, 70, -170); g.fill(); g.stroke(); g.restore(); };
+note(900, 2650, 1.5, '#FFE066'); note(1150, 2450, 1.1, '#FFFFFF'); note(760, 2380, 0.9, '#FFE066');
+// Zed, huge, whistling, bottom left
+g.save(); g.translate(330, 2330); g.scale(3.2, 3.2);
+drawToon(g, { body: '#F28C3C', hat: 'beanie', hatCol: '#2E4E8A', neck: 'scarf', neckCol: '#F2C230', head: '#EBC49A', kid: true, extra: ['freckles'] }, { mood: 'shock', look: [0.7, -0.3], talk: 0.3, sweat: 1, armL: [10, 6], armR: [10, 6] });
+g.restore();
+gr = g.createRadialGradient(W / 2, H * 0.5, H * 0.3, W / 2, H * 0.5, H * 0.75); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,0.45)'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+const word = (s, x, y, size, fill, glow, rot) => { g.save(); g.translate(x, y); g.rotate(rot); g.font = `900 ${size}px Inter`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
+  g.fillStyle = 'rgba(0,0,0,0.55)'; g.fillText(s, 14, 30); g.lineWidth = size * 0.2; g.strokeStyle = '#0B0B14'; g.strokeText(s, 0, 0); if (glow) { g.shadowColor = glow; g.shadowBlur = 70; } g.fillStyle = fill; g.fillText(s, 0, 0); g.shadowBlur = 0; g.restore(); };
+const fit = (s, size, maxW) => { g.font = `900 ${size}px Inter`; return Math.min(size, size * maxW / g.measureText(s).width); };
+word("DON'T WHISTLE", W / 2, 360, fit("DON'T WHISTLE", 330, 1950), '#FFFFFF', '#FFC9A0', -0.04);
+word('TONIGHT?!', W / 2, 740, fit('TONIGHT?!', 440, 1950), '#FFD43B', null, -0.04);
+g.save(); g.translate(1800, 3640); g.rotate(0.07); g.fillStyle = '#E63946'; g.strokeStyle = '#0B0B14'; g.lineWidth = 12; g.beginPath(); g.roundRect(-190, -60, 380, 120, 26); g.fill(); g.stroke();
+g.fillStyle = '#FFFFFF'; g.font = '900 80px Inter'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('SCI-FI', 0, 6); g.restore();
+document.title = 'DONE';
+</script></body></html>
