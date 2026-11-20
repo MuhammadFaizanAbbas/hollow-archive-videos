@@ -1,0 +1,33 @@
+{
+  "title": "Don't Touch The Mirrors",
+  "idea": 705,
+  "voice": "am_puck",
+  "speed": 0.84,
+  "lead": 0.2,
+  "outro": 1.0,
+  "gap": 0.22,
+  "music": "none",
+  "gate": "7/7",
+  "sources": ["Original fiction (SCIFI world-rule). Real idea used loosely: mirrors show a doubled view; animals and predators judge group size by what they can see (bluffing by looking bigger). Fiction, never presented as true."],
+  "lines": [
+    { "text": "Don't. Touch. The mirrors.", "caps": "Don't. | Touch. | The mirrors.", "gap": 0.2 },
+    { "text": "On this colony, every house has mirrors on every wall." },
+    { "text": "Even the toilet." },
+    { "text": "I'm Zed. I just landed, and I asked why." },
+    { "text": "Everyone just stared at the hills." },
+    { "text": "But I hate mirrors, so I took one down." },
+    { "text": "The whole street went silent." },
+    { "text": "The mayor sprinted in, wearing one slipper." },
+    { "text": "Put it back! Put it back!" },
+    { "text": "So I hung it up again. Upside down." },
+    { "text": "Ha ha ha!", "gap": 0.15 },
+    { "text": "But then I peeked out of the window." },
+    { "text": "Tall grey aliens, counting our houses." },
+    { "text": "Then the mayor explained.", "gap": 0.35 },
+    { "text": "Every mirror doubles our numbers," },
+    { "text": "so the aliens think we're too big to attack." },
+    { "text": "My missing mirror left a hole in the count." },
+    { "text": "Now I sleep in the kitchen, hugging that mirror." },
+    { "text": "Don't. Touch. The mirrors.", "caps": "Don't. | Touch. | The mirrors." }
+  ]
+}
