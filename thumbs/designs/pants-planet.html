@@ -1,0 +1,43 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>@font-face{font-family:'Inter';font-weight:900;src:url('fonts/Inter-Black.otf');} html,body{margin:0;background:#000} canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/"}}</script></head>
+<body><canvas id="c" width="2160" height="3840"></canvas>
+<script type="module">
+import { drawToon, INK } from './src/core/toon.js';
+const c = document.getElementById('c'), g = c.getContext('2d'), W = 2160, H = 3840;
+const R = (s) => { let x = Math.sin(s * 127.1) * 43758.5453; return x - Math.floor(x); };
+await document.fonts.load('900 100px Inter');
+// 1. dusk sky (deep blue to teal) with a pink moon
+let gr = g.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, '#0C1A4A'); gr.addColorStop(0.5, '#1E4C8A'); gr.addColorStop(1, '#0E2A3E'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+for (let i = 0; i < 200; i++) { g.fillStyle = `rgba(255,255,255,${0.3 + R(i * 9) * 0.6})`; g.beginPath(); g.arc(R(i) * W, R(i * 3.3) * H * 0.6, 2 + R(i * 7) * 6, 0, 7); g.fill(); }
+g.fillStyle = '#F3B6D6'; g.beginPath(); g.arc(1760, 1100, 190, 0, 7); g.fill();
+// 2. lime glow + rays behind the jeans
+const rx = W / 2, ry = 1950;
+gr = g.createRadialGradient(rx, ry, 60, rx, ry, 1500); gr.addColorStop(0, 'rgba(200,255,120,0.95)'); gr.addColorStop(0.35, 'rgba(120,230,90,0.4)'); gr.addColorStop(1, 'rgba(60,200,80,0)'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+g.save(); g.translate(rx, ry); g.globalCompositeOperation = 'screen'; for (let i = 0; i < 18; i++) { g.rotate(Math.PI * 2 / 18); g.fillStyle = 'rgba(220,255,160,0.10)'; g.beginPath(); g.moveTo(0, 0); g.lineTo(-110, -2300); g.lineTo(110, -2300); g.closePath(); g.fill(); } g.restore();
+// 3. HERO: giant jeans in a red NO circle
+g.save(); g.translate(rx, ry); g.shadowColor = 'rgba(0,0,0,0.5)'; g.shadowBlur = 60; g.shadowOffsetY = 30;
+g.fillStyle = '#FFFFFF'; g.strokeStyle = '#E63946'; g.lineWidth = 70; g.beginPath(); g.arc(0, 0, 720, 0, 7); g.fill(); g.shadowColor = 'transparent'; g.stroke();
+g.fillStyle = '#3F6FB0'; g.strokeStyle = INK; g.lineWidth = 22; g.lineJoin = 'round'; g.beginPath(); g.moveTo(-340, -400); g.lineTo(340, -400); g.lineTo(380, 420); g.lineTo(90, 420); g.lineTo(0, -10); g.lineTo(-90, 420); g.lineTo(-380, 420); g.closePath(); g.fill(); g.stroke();
+g.fillStyle = '#2A4F86'; g.fillRect(-340, -400, 680, 100); g.strokeRect(-340, -400, 680, 100);
+g.strokeStyle = '#E8C060'; g.lineWidth = 10; g.setLineDash([26, 18]); g.beginPath(); g.moveTo(-250, -290); g.lineTo(-290, 400); g.moveTo(250, -290); g.lineTo(290, 400); g.stroke(); g.setLineDash([]);
+g.strokeStyle = '#E63946'; g.lineWidth = 70; g.lineCap = 'round'; g.beginPath(); g.moveTo(-510, -510); g.lineTo(510, 510); g.stroke(); g.restore();
+// 4. glow-moths swarming the jeans
+const moth = (x, y, s) => { const gg = g.createRadialGradient(x, y, 0, x, y, s * 3.4); gg.addColorStop(0, 'rgba(200,255,120,0.9)'); gg.addColorStop(1, 'rgba(200,255,120,0)'); g.fillStyle = gg; g.fillRect(x - s * 3.4, y - s * 3.4, s * 6.8, s * 6.8);
+  g.fillStyle = '#E8FF9A'; g.strokeStyle = INK; g.lineWidth = Math.max(4, s * 0.12); [-1, 1].forEach((sd) => { g.beginPath(); g.ellipse(x + sd * s * 0.7, y - s * 0.2, s * 0.8, s * 0.55, sd * 0.5, 0, 7); g.fill(); g.stroke(); }); g.fillStyle = '#4A5A2A'; g.beginPath(); g.ellipse(x, y, s * 0.25, s * 0.65, 0, 0, 7); g.fill(); };
+for (let i = 0; i < 46; i++) { const a = R(i * 3) * 6.28, r = 300 + R(i * 5) * 800; moth(rx + Math.cos(a) * r, ry + Math.sin(a) * r * 0.85, 22 + R(i * 9) * 38); }
+// 5. Mia: shocked, huge, bottom left
+g.save(); g.translate(250, 2560); g.scale(3.5, 3.5);
+drawToon(g, { body: '#3F6FB0', head: '#D9A877', hair: 'long', hairCol: '#3A2418', extra: ['freckles'], neck: 'scarf', neckCol: '#F2C230' }, { mood: 'shock', look: [0.6, -0.5], talk: 0.9, sweat: 1, armL: [10, 6], armR: [10, 6] });
+g.restore();
+gr = g.createRadialGradient(W / 2, H * 0.5, H * 0.3, W / 2, H * 0.5, H * 0.75); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,0.5)'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+// 6. text
+const word = (s, x, y, size, fill, glow, rot) => { g.save(); g.translate(x, y); g.rotate(rot); g.font = `900 ${size}px Inter`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
+  g.fillStyle = 'rgba(0,0,0,0.55)'; g.fillText(s, 14, 30); g.lineWidth = size * 0.2; g.strokeStyle = '#0B0B14'; g.strokeText(s, 0, 0); if (glow) { g.shadowColor = glow; g.shadowBlur = 70; } g.fillStyle = fill; g.fillText(s, 0, 0); g.shadowBlur = 0; g.restore(); };
+const fit = (s, size, maxW) => { g.font = `900 ${size}px Inter`; return Math.min(size, size * maxW / g.measureText(s).width); };
+word('PANTS ARE', W / 2, 360, fit('PANTS ARE', 330, 1950), '#FFFFFF', '#9FFFA0', -0.04);
+word('ILLEGAL?!', W / 2, 720, fit('ILLEGAL?!', 420, 1850), '#FFD43B', null, -0.04);
+g.save(); g.translate(1800, 3560); g.rotate(0.07); g.fillStyle = '#E63946'; g.strokeStyle = '#0B0B14'; g.lineWidth = 12; g.beginPath(); g.roundRect(-190, -60, 380, 120, 26); g.fill(); g.stroke();
+g.fillStyle = '#FFFFFF'; g.font = '900 80px Inter'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('SCI-FI', 0, 6); g.restore();
+document.title = 'DONE';
+</script></body></html>

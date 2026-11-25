@@ -1,0 +1,71 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>@font-face{font-family:'Inter';font-weight:900;src:url('fonts/Inter-Black.otf');} html,body{margin:0;background:#000} canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/"}}</script></head>
+<body><canvas id="c" width="2160" height="3840"></canvas>
+<script type="module">
+import { drawToon, INK } from './src/core/toon.js';
+const c = document.getElementById('c'), g = c.getContext('2d'), W = 2160, H = 3840;
+const R = (s) => { let x = Math.sin(s * 127.1) * 43758.5453; return x - Math.floor(x); };
+await document.fonts.load('900 100px Inter');
+// 1. blizzard sky + snow field
+let gr = g.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, '#2C4C7A'); gr.addColorStop(0.45, '#7FA3CC'); gr.addColorStop(0.62, '#DCE9F5'); gr.addColorStop(1, '#B9CDE2'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+// distant red truck silhouette, blurred
+g.save(); g.filter = 'blur(18px)'; g.fillStyle = '#C43B2E'; g.fillRect(-100, 1500, 1100, 520); g.fillRect(1000, 1640, 520, 380); g.fillStyle = '#9FC4E0'; g.fillRect(1080, 1690, 360, 160);
+g.fillStyle = '#2A2F3E'; [200, 640, 1240].forEach((x) => { g.beginPath(); g.arc(x, 2040, 150, 0, 7); g.fill(); }); g.restore();
+// pine trees blurred
+g.save(); g.filter = 'blur(10px)'; for (let i = 0; i < 6; i++) { const x = 1500 + i * 150 + R(i) * 60, h = 500 + R(i * 3) * 300; g.fillStyle = i % 2 ? '#2F6B4A' : '#3E7F58'; g.beginPath(); g.moveTo(x, 1900 - h); g.lineTo(x - 140, 1980); g.lineTo(x + 140, 1980); g.closePath(); g.fill(); } g.restore();
+// cold vignette
+gr = g.createRadialGradient(W / 2, 2350, 200, W / 2, 2350, 1600); gr.addColorStop(0, 'rgba(255,255,255,0.35)'); gr.addColorStop(1, 'rgba(255,255,255,0)'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+// 2. the hero tyre: squashed wide and flat on the snow, gripping
+const tx = W / 2 + 40, ty = 2120;
+g.save(); g.translate(tx, ty);
+g.fillStyle = 'rgba(40,60,90,0.35)'; g.beginPath(); g.ellipse(0, 330, 820, 70, 0, 0, 7); g.fill();
+g.lineWidth = 22; g.strokeStyle = INK; g.lineJoin = 'round';
+// squashed tyre: wide flat bottom
+const tyre = () => { g.beginPath(); g.moveTo(-560, 300); g.bezierCurveTo(-760, 300, -760, -40, -620, -220); g.bezierCurveTo(-480, -420, 480, -420, 620, -220); g.bezierCurveTo(760, -40, 760, 300, 560, 300); g.closePath(); };
+tyre(); gr = g.createLinearGradient(0, -420, 0, 300); gr.addColorStop(0, '#3A3F4E'); gr.addColorStop(1, '#16181F'); g.fillStyle = gr; g.fill(); g.stroke();
+// tread blocks along the flat contact patch
+g.fillStyle = '#0B0C10'; for (let i = -8; i <= 8; i++) { g.beginPath(); g.roundRect(i * 66 - 22, 250, 44, 60, 8); g.fill(); }
+// rim
+g.fillStyle = '#C9CCD6'; g.beginPath(); g.ellipse(0, -30, 330, 260, 0, 0, 7); g.fill(); g.stroke();
+g.fillStyle = '#8A97A8'; g.beginPath(); g.ellipse(0, -30, 220, 170, 0, 0, 7); g.fill(); g.lineWidth = 14; g.stroke();
+g.fillStyle = '#E8EBF2'; g.beginPath(); g.ellipse(0, -30, 70, 54, 0, 0, 7); g.fill(); g.stroke();
+for (let i = 0; i < 6; i++) { const a = i * Math.PI / 3; g.fillStyle = '#3A3F4E'; g.beginPath(); g.arc(Math.cos(a) * 140, -30 + Math.sin(a) * 105, 18, 0, 7); g.fill(); }
+// snow sticking to the tyre bottom
+g.fillStyle = '#FFFFFF'; for (let i = 0; i < 40; i++) { const x = (R(i) - 0.5) * 1500, y = 280 + R(i * 2) * 40; g.beginPath(); g.arc(x, y, 14 + R(i * 3) * 26, 0, 7); g.fill(); }
+// valve + air hissing out (PSSST)
+g.lineWidth = 14; g.strokeStyle = INK; g.fillStyle = '#E63946'; g.beginPath(); g.roundRect(380, -330, 44, 110, 10); g.fill(); g.stroke();
+g.strokeStyle = 'rgba(255,255,255,0.95)'; g.lineCap = 'round'; for (let i = 0; i < 5; i++) { g.lineWidth = 22 - i * 3; g.beginPath(); g.moveTo(440, -360 - i * 10); g.bezierCurveTo(560 + i * 40, -440 - i * 60, 640 + i * 60, -380 - i * 90, 760 + i * 60, -470 - i * 70); g.stroke(); }
+g.restore();
+// grip arrows on the snow
+g.save(); g.translate(tx, ty + 390); g.fillStyle = '#FFD43B'; g.strokeStyle = INK; g.lineWidth = 12;
+[-1, 1].forEach((s) => { g.beginPath(); g.moveTo(s * 1030, 0); g.lineTo(s * 880, -66); g.lineTo(s * 880, -24); g.lineTo(s * 700, -24); g.lineTo(s * 700, 24); g.lineTo(s * 880, 24); g.lineTo(s * 880, 66); g.closePath(); g.fill(); g.stroke(); }); g.restore();
+// PSSST! burst
+g.save(); g.translate(1690, 1560); g.rotate(0.12); g.fillStyle = '#FFFFFF'; g.strokeStyle = INK; g.lineWidth = 14; g.beginPath(); for (let i = 0; i < 24; i++) { const a = i / 24 * Math.PI * 2, r = i % 2 ? 170 : 240; g.lineTo(Math.cos(a) * r * 1.35, Math.sin(a) * r * 0.8); } g.closePath(); g.fill(); g.stroke();
+g.fillStyle = '#E63946'; g.font = '900 120px Inter'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('PSSST!', 0, 6); g.restore();
+// 15 PSI gauge
+g.save(); g.translate(430, 1540); g.rotate(-0.1); g.lineWidth = 18; g.strokeStyle = INK; g.fillStyle = '#F6F1E4'; g.beginPath(); g.arc(0, 0, 230, 0, 7); g.fill(); g.stroke();
+[['#4CAF50', -3.6, -2.6], ['#F2C230', -2.6, -1.4], ['#E63946', -1.4, -0.3]].forEach(([col, a0, a1]) => { g.strokeStyle = col; g.lineWidth = 34; g.beginPath(); g.arc(0, 0, 170, a0, a1); g.stroke(); });
+g.strokeStyle = INK; g.lineWidth = 16; g.lineCap = 'round'; g.beginPath(); g.moveTo(0, 0); g.lineTo(Math.cos(-3.1) * 150, Math.sin(-3.1) * 150); g.stroke(); g.fillStyle = INK; g.beginPath(); g.arc(0, 0, 26, 0, 7); g.fill();
+g.fillStyle = '#E63946'; g.strokeStyle = INK; g.lineWidth = 12; g.beginPath(); g.roundRect(-190, 250, 380, 130, 28); g.fill(); g.stroke(); g.fillStyle = '#FFFFFF'; g.font = '900 96px Inter'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('15 PSI', 0, 318); g.restore();
+// 3. the driver: smug, knowing, big at the bottom
+g.save(); g.translate(230, 2760); g.scale(3.3, 3.3);
+drawToon(g, { body: '#D9A34A', hat: 'beanie', hatCol: '#D8343F', neck: 'scarf', neckCol: '#F2E6CF', extra: ['mustache'] },
+  { mood: 'sly', look: [0.6, -0.4], talk: 0, armL: [10, 6], armR: [10, 6] });
+g.restore();
+// 4. blizzard streaks over everything
+g.save(); g.strokeStyle = 'rgba(255,255,255,0.55)'; g.lineCap = 'round'; for (let i = 0; i < 260; i++) { const x = R(i * 1.3) * W, y = R(i * 2.7) * H, l = 40 + R(i) * 80; g.lineWidth = 3 + R(i * 5) * 6; g.beginPath(); g.moveTo(x, y); g.lineTo(x - l * 0.45, y + l); g.stroke(); }
+g.fillStyle = 'rgba(255,255,255,0.85)'; for (let i = 0; i < 160; i++) { g.beginPath(); g.arc(R(i * 9.1) * W, R(i * 4.3) * H, 4 + R(i) * 10, 0, 7); g.fill(); } g.restore();
+// 5. vignette
+gr = g.createRadialGradient(W / 2, H * 0.5, H * 0.3, W / 2, H * 0.5, H * 0.75); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(10,20,40,0.5)'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+// 6. text
+const word = (s, x, y, size, fill, glow, rot) => { g.save(); g.translate(x, y); g.rotate(rot); g.font = `900 ${size}px Inter`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
+  g.fillStyle = 'rgba(0,0,0,0.5)'; g.fillText(s, 14, 30); g.lineWidth = size * 0.2; g.strokeStyle = '#0B0B14'; g.strokeText(s, 0, 0);
+  if (glow) { g.shadowColor = glow; g.shadowBlur = 70; } g.fillStyle = fill; g.fillText(s, 0, 0); g.shadowBlur = 0; g.restore(); };
+const fit = (s, size, maxW) => { g.font = `900 ${size}px Inter`; return Math.min(size, size * maxW / g.measureText(s).width); };
+word('FLAT TYRES', W / 2, 450, fit('FLAT TYRES', 320, 1900), '#FFFFFF', '#9FD8FF', -0.04);
+word('SAVED HIM?!', W / 2, 800, fit('SAVED HIM?!', 330, 1950), '#FFD43B', null, -0.04);
+g.save(); g.translate(330, 120); g.rotate(-0.08); g.fillStyle = '#E63946'; g.strokeStyle = '#0B0B14'; g.lineWidth = 12; g.beginPath(); g.roundRect(-250, -60, 500, 120, 26); g.fill(); g.stroke();
+g.fillStyle = '#FFFFFF'; g.font = '900 78px Inter'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('GENIUS TRICK', 0, 6); g.restore();
+document.title = 'DONE';
+</script></body></html>

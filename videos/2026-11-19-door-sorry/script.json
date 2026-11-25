@@ -1,0 +1,113 @@
+{
+ "title": "Why You Must Say Sorry To Every Door",
+ "voice": "am_puck",
+ "speed": 1.08,
+ "lead": 0.2,
+ "outro": 0.8,
+ "gap": 0.12,
+ "gate": "7/7",
+ "sources": [
+  "Original fiction (SCIFI world-rule). Real idea used loosely: a Venus flytrap snaps shut when its trigger hairs are touched (Royal Botanic Gardens Kew; Smithsonian)."
+ ],
+ "ambience": [
+  {
+   "type": "city",
+   "from": 0,
+   "to": 70
+  }
+ ],
+ "lines": [
+  {
+   "text": "Always say sorry to the door."
+  },
+  {
+   "text": "On this planet, you must apologize to every door before you open it."
+  },
+  {
+   "text": "Every single one."
+  },
+  {
+   "text": "I'm Pip."
+  },
+  {
+   "text": "I say sorry to the front door."
+  },
+  {
+   "text": "The school door."
+  },
+  {
+   "text": "The fridge door."
+  },
+  {
+   "text": "Even the toilet door, because he's very sensitive."
+  },
+  {
+   "text": "Then a tourist arrived. Rex."
+  },
+  {
+   "text": "He took one look and laughed."
+  },
+  {
+   "text": "Sorry, door? Doors are wood, you weirdo!"
+  },
+  {
+   "text": "I stayed calm. I didn't explain."
+  },
+  {
+   "text": "So Rex kicked the school door open."
+  },
+  {
+   "text": "The door gasped."
+  },
+  {
+   "text": "He slammed the fridge."
+  },
+  {
+   "text": "Something inside yelled, rude!"
+  },
+  {
+   "text": "He shouted at the town gate, move it, door!"
+  },
+  {
+   "text": "And the gate rolled its eyes."
+  },
+  {
+   "text": "It actually rolled its eyes."
+  },
+  {
+   "text": "You see, every door here is a snap plant."
+  },
+  {
+   "text": "Like a flytrap that closes when you poke it,"
+  },
+  {
+   "text": "but shy, and with feelings.",
+   "gap": 0.2
+  },
+  {
+   "text": "Then Rex tried the bus door."
+  },
+  {
+   "text": "It folded him up like a sandwich,"
+  },
+  {
+   "text": "lifted him over the whole town,"
+  },
+  {
+   "text": "and held him there for three hours."
+  },
+  {
+   "text": "He only came down when he sang sorry."
+  },
+  {
+   "text": "Loudly. Eleven times."
+  },
+  {
+   "text": "Now Rex bows to every door."
+  },
+  {
+   "text": "So, always say sorry to the door."
+  }
+ ],
+ "music": "none"
+}

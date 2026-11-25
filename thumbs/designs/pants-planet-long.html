@@ -1,0 +1,38 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Poppins;font-weight:700;src:url(fonts/Poppins-Bold.ttf)}
+html,body{margin:0;background:#000}canvas{display:block}</style></head><body><canvas id="c" width="1280" height="720"></canvas>
+<script src="lib.js"></script><script src="chars.js"></script><script src="env.js"></script><script src="env2.js"></script>
+<script>
+(async()=>{
+await document.fonts.load('700 60px Poppins');
+const c=document.getElementById('c'),g=c.getContext('2d'),TW=1280,TH=720;
+const R=s=>{let x=Math.sin(s*127.1)*43758.5453;return x-Math.floor(x)};
+// bg
+let gr=g.createLinearGradient(0,0,0,TH);gr.addColorStop(0,'#1b1458');gr.addColorStop(1,'#07061f');g.fillStyle=gr;g.fillRect(0,0,TW,TH);
+// planet top-right
+g.fillStyle='#e9a0d0';g.beginPath();g.arc(1150,110,70,0,7);g.fill();g.strokeStyle='#0b0b14';g.lineWidth=6;g.stroke();
+// glow behind jeans
+const jx=600,jy=380;
+gr=g.createRadialGradient(jx,jy,20,jx,jy,380);gr.addColorStop(0,'rgba(150,230,255,.95)');gr.addColorStop(.4,'rgba(60,150,255,.5)');gr.addColorStop(1,'rgba(40,100,255,0)');g.fillStyle=gr;g.fillRect(0,0,TW,TH);
+jeans(g,jx,jy,.85,0,'#7fd8ff',1.2);
+// moths
+g.save();g.globalCompositeOperation='screen';
+for(let i=0;i<70;i++){const a=R(i*3.3)*7,d=60+R(i*1.7)*330;const x=jx+Math.cos(a)*d*1.2,y=jy+Math.sin(a)*d*.85;const s=4+R(i)*9;
+const m=g.createRadialGradient(x,y,0,x,y,s*3);m.addColorStop(0,'rgba(255,255,255,1)');m.addColorStop(.3,'rgba(170,230,255,.7)');m.addColorStop(1,'rgba(100,180,255,0)');g.fillStyle=m;g.fillRect(x-s*3,y-s*3,s*6,s*6);}
+g.restore();
+// Mia, left, big
+g.save();g.translate(0,0);
+who(g,MIA,240,745,520,tt=>({arms:{L:[2.2,.2],R:{ik:[.5,-.8]}},legs:{L:[.1,-.04],R:[.1,-.04]},bob:0}),1,{face:{eyes:'wide',mouth:'o',browAng:-.3,browUp:1}});
+g.restore();
+sweat(g,330,200,22,1);sweat(g,130,250,18,1);
+// text
+const word=(s,x,y,size,fill,rot)=>{g.save();g.translate(x,y);g.rotate(rot);g.font=`700 ${size}px Poppins`;g.textAlign='center';g.textBaseline='middle';g.lineJoin='round';
+g.fillStyle='rgba(0,0,0,.5)';g.fillText(s,6,10);g.lineWidth=size*.22;g.strokeStyle='#0b0b14';g.strokeText(s,0,0);g.fillStyle=fill;g.fillText(s,0,0);g.restore()};
+const fit=(s,size,w)=>{g.font=`700 ${size}px Poppins`;return Math.min(size,size*w/g.measureText(s).width)};
+word('KEEP YOUR',985,320,fit('KEEP YOUR',130,540),'#fff',-.05);
+word('PANTS ON?!',985,480,fit('PANTS ON?!',150,540),'#ffd43b',-.05);
+// sticker
+g.save();g.translate(1130,630);g.rotate(.06);g.fillStyle='#e63946';g.strokeStyle='#0b0b14';g.lineWidth=6;g.beginPath();g.roundRect(-85,-30,170,60,14);g.fill();g.stroke();g.fillStyle='#fff';g.font='700 34px Poppins';g.textAlign='center';g.textBaseline='middle';g.fillText('SCI-FI',0,2);g.restore();
+document.title='DONE';
+})();
+</script></body></html>

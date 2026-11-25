@@ -1,0 +1,44 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>@font-face{font-family:'Inter';font-weight:900;src:url('fonts/Inter-Black.otf');} html,body{margin:0;background:#000} canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/"}}</script></head>
+<body><canvas id="c" width="2160" height="3840"></canvas>
+<script type="module">
+import { drawToon, INK, PROPS } from './src/core/toon.js';
+const c = document.getElementById('c'), g = c.getContext('2d'), W = 2160, H = 3840;
+const R = (s) => { let x = Math.sin(s * 127.1) * 43758.5453; return x - Math.floor(x); };
+await document.fonts.load('900 100px Inter');
+let gr = g.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, '#3A2A8C'); gr.addColorStop(0.45, '#C85A9A'); gr.addColorStop(1, '#F7B27A'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+g.fillStyle = '#F4E9F7'; g.beginPath(); g.arc(1750, 1180, 170, 0, 7); g.fill();
+const rx = W / 2, ry = 2050;
+gr = g.createRadialGradient(rx, ry, 80, rx, ry, 1400); gr.addColorStop(0, 'rgba(255,240,150,0.95)'); gr.addColorStop(0.4, 'rgba(255,190,110,0.4)'); gr.addColorStop(1, 'rgba(255,160,90,0)'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+g.save(); g.translate(rx, ry); g.globalCompositeOperation = 'screen'; for (let i = 0; i < 18; i++) { g.rotate(Math.PI * 2 / 18); g.fillStyle = 'rgba(255,240,190,0.10)'; g.beginPath(); g.moveTo(0, 0); g.lineTo(-110, -2300); g.lineTo(110, -2300); g.closePath(); g.fill(); } g.restore();
+// ground
+g.fillStyle = '#E3A98B'; g.beginPath(); g.moveTo(0, 3000); g.quadraticCurveTo(W / 2, 2800, W, 3000); g.lineTo(W, H); g.lineTo(0, H); g.fill();
+// HERO rock
+g.save(); g.translate(rx, ry); g.shadowColor = 'rgba(0,0,0,0.45)'; g.shadowBlur = 70; g.shadowOffsetY = 40;
+g.fillStyle = '#9BA2B8'; g.strokeStyle = INK; g.lineWidth = 34; g.lineJoin = 'round';
+g.beginPath(); g.moveTo(-620, 380); g.quadraticCurveTo(-700, -250, -250, -520); g.quadraticCurveTo(300, -700, 600, -200); g.quadraticCurveTo(760, 200, 520, 420); g.quadraticCurveTo(0, 560, -620, 380); g.closePath(); g.fill(); g.shadowColor = 'transparent'; g.stroke();
+g.fillStyle = 'rgba(255,255,255,0.35)'; g.beginPath(); g.ellipse(-260, -330, 220, 90, -0.45, 0, 7); g.fill();
+g.strokeStyle = 'rgba(26,26,30,0.5)'; g.lineWidth = 18; g.beginPath(); g.moveTo(80, -60); g.lineTo(300, -300); g.moveTo(-330, 20); g.lineTo(-120, -160); g.moveTo(180, 120); g.lineTo(380, 20); g.stroke();
+g.restore();
+// floating boots above (Zed lifting off)
+g.save(); g.translate(1650, 1000); g.rotate(0.15); g.fillStyle = '#35A2D8'; g.strokeStyle = INK; g.lineWidth = 22; [[-60, 0], [60, 30]].forEach(([x, y]) => { g.beginPath(); g.roundRect(x - 40, y - 150, 80, 210, 30); g.fill(); g.stroke(); g.fillStyle = '#E8453C'; g.beginPath(); g.roundRect(x - 60, y + 30, 130, 80, 30); g.fill(); g.stroke(); g.fillStyle = '#35A2D8'; }); g.restore();
+for (let i = 0; i < 40; i++) { g.fillStyle = `rgba(255,255,255,${0.4 + R(i) * 0.6})`; g.beginPath(); g.arc(R(i * 2) * W, R(i * 5) * 1900, 3 + R(i * 7) * 8, 0, 7); g.fill(); }
+// baby with tiny rock, right
+g.save(); g.translate(1750, 3000); g.scale(1.9, 1.9);
+drawToon(g, { body: '#F7B6CF', hat: 'beanie', hatCol: '#F2C230', kid: true, head: '#F6D9B5', extra: ['blush'] }, { mood: 'sly', holdR: PROPS.rockS, armR: [60, 85], armL: [10, 10] });
+g.restore();
+// Zed face, huge, bottom left
+g.save(); g.translate(260, 2560); g.scale(3.5, 3.5);
+drawToon(g, { body: '#35A2D8', pattern: 'vest', patCol: '#F2C230', hat: 'visor', hatCol: '#E8453C', neck: 'collar', neckCol: '#FFFFFF', head: '#EBC49A', extra: ['freckles'] }, { mood: 'shock', look: [0.6, -0.4], talk: 0.9, sweat: 1, armL: [10, 6], armR: [10, 6] });
+g.restore();
+gr = g.createRadialGradient(W / 2, H * 0.5, H * 0.3, W / 2, H * 0.5, H * 0.75); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,0.45)'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+const word = (s, x, y, size, fill, glow, rot) => { g.save(); g.translate(x, y); g.rotate(rot); g.font = `900 ${size}px Inter`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
+  g.fillStyle = 'rgba(0,0,0,0.55)'; g.fillText(s, 14, 30); g.lineWidth = size * 0.2; g.strokeStyle = '#0B0B14'; g.strokeText(s, 0, 0); if (glow) { g.shadowColor = glow; g.shadowBlur = 70; } g.fillStyle = fill; g.fillText(s, 0, 0); g.shadowBlur = 0; g.restore(); };
+const fit = (s, size, maxW) => { g.font = `900 ${size}px Inter`; return Math.min(size, size * maxW / g.measureText(s).width); };
+word("DON'T DROP", W / 2, 360, fit("DON'T DROP", 330, 1950), '#FFFFFF', '#FFC9A0', -0.04);
+word('YOUR ROCK?!', W / 2, 720, fit('YOUR ROCK?!', 420, 1950), '#FFD43B', null, -0.04);
+g.save(); g.translate(1800, 3640); g.rotate(0.07); g.fillStyle = '#E63946'; g.strokeStyle = '#0B0B14'; g.lineWidth = 12; g.beginPath(); g.roundRect(-190, -60, 380, 120, 26); g.fill(); g.stroke();
+g.fillStyle = '#FFFFFF'; g.font = '900 80px Inter'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('SCI-FI', 0, 6); g.restore();
+document.title = 'DONE';
+</script></body></html>

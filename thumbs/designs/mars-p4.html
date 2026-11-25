@@ -1,0 +1,51 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>@font-face{font-family:'Inter';font-weight:900;src:url('fonts/Inter-Black.otf');} html,body{margin:0;background:#000} canvas{display:block}</style>
+<script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/"}}</script></head>
+<body><canvas id="c" width="2160" height="3840"></canvas>
+<script type="module">
+import { drawToon, INK } from './src/core/toon.js';
+const c = document.getElementById('c'), g = c.getContext('2d'), W = 2160, H = 3840;
+const R = (s) => { let x = Math.sin(s * 127.1) * 43758.5453; return x - Math.floor(x); };
+await document.fonts.load('900 100px Inter');
+// sky + mars ground
+let gr = g.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, '#1B1240'); gr.addColorStop(0.45, '#4B2A7A'); gr.addColorStop(0.62, '#9A4A5A'); gr.addColorStop(0.64, '#8A3A2A'); gr.addColorStop(1, '#4A1A14'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+g.fillStyle = '#fff'; for (let i = 0; i < 90; i++) { g.globalAlpha = 0.3 + R(i) * 0.6; g.beginPath(); g.arc(R(i * 3.7) * W, R(i * 8.3) * H * 0.5, 2 + R(i * 2) * 5, 0, 7); g.fill(); } g.globalAlpha = 1;
+// signal aura
+gr = g.createRadialGradient(1080, 1900, 80, 1080, 1900, 1500); gr.addColorStop(0, 'rgba(210,150,255,0.95)'); gr.addColorStop(0.3, 'rgba(170,100,255,0.5)'); gr.addColorStop(1, 'rgba(120,60,255,0)'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+g.save(); g.translate(1080, 1900); g.globalCompositeOperation = 'screen'; for (let i = 0; i < 16; i++) { g.rotate(Math.PI * 2 / 16); g.fillStyle = 'rgba(220,180,255,0.14)'; g.beginPath(); g.moveTo(0, 0); g.lineTo(-80, -2400); g.lineTo(80, -2400); g.closePath(); g.fill(); } g.restore();
+// far canyon + blinking purple light
+g.fillStyle = '#5A1E22'; g.beginPath(); g.moveTo(0, 2400); for (let x = 0; x <= W; x += 110) g.lineTo(x, 2280 - R(x) * 170); g.lineTo(W, 2500); g.lineTo(0, 2500); g.fill();
+// RADIO
+g.save(); g.translate(1100, 1750); g.lineJoin = 'round';
+g.strokeStyle = INK; g.lineWidth = 22; g.fillStyle = '#B7BCCB'; g.beginPath(); g.moveTo(480, -420); g.lineTo(640, -640); g.stroke(); g.beginPath(); g.arc(640, -640, 34, 0, 7); g.fillStyle = '#E63946'; g.fill(); g.stroke();
+g.fillStyle = '#2B3047'; g.beginPath(); g.roundRect(-640, -430, 1280, 860, 70); g.fill(); g.stroke();
+g.fillStyle = '#1A1D2E'; g.beginPath(); g.roundRect(-590, -380, 560, 760, 50); g.fill(); g.lineWidth = 14; g.stroke();
+g.fillStyle = '#B77DFF'; for (let r = 0; r < 7; r++) for (let q = 0; q < 4; q++) { g.beginPath(); g.arc(-500 + q * 130, -290 + r * 100, 26, 0, 7); g.fill(); }
+g.fillStyle = '#0B0718'; g.beginPath(); g.roundRect(20, -380, 580, 480, 40); g.fill(); g.lineWidth = 14; g.stroke();
+g.shadowColor = '#C77DFF'; g.shadowBlur = 50; g.strokeStyle = '#E3B8FF'; g.lineWidth = 16; g.lineCap = 'round'; g.beginPath(); for (let x = 50; x <= 570; x += 8) { const u = (x - 50) / 520; const y = -140 + Math.sin(u * 38) * 120 * Math.sin(u * 3.14) * (0.5 + 0.5 * Math.sin(u * 9)); x === 50 ? g.moveTo(x, y) : g.lineTo(x, y); } g.stroke(); g.shadowBlur = 0;
+g.fillStyle = '#B77DFF'; g.strokeStyle = INK; g.lineWidth = 12; g.beginPath(); g.roundRect(130, 150, 360, 130, 65); g.fill(); g.stroke(); g.fillStyle = '#0B0718'; g.font = '900 96px Inter'; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('CH 3', 310, 218);
+g.fillStyle = '#E63946'; [160, 290, 420].forEach((x) => { g.beginPath(); g.arc(x, 345, 34, 0, 7); g.fill(); g.stroke(); });
+g.restore();
+// PIP the rover (right)
+g.save(); g.translate(1640, 2900); g.lineJoin = 'round'; g.lineWidth = 20; g.strokeStyle = INK;
+g.fillStyle = '#E8EBF2'; g.beginPath(); g.roundRect(-300, -120, 600, 360, 50); g.fill(); g.stroke();
+g.fillStyle = '#1F1C33'; [[-190, 240], [190, 240]].forEach(([x, y]) => { g.beginPath(); g.arc(x, y, 110, 0, 7); g.fill(); g.fillStyle = '#C9704E'; g.beginPath(); g.arc(x, y, 50, 0, 7); g.fill(); g.fillStyle = '#1F1C33'; });
+g.fillStyle = '#1F1C33'; g.fillRect(-40, -280, 80, 170);
+g.fillStyle = '#E8EBF2'; g.beginPath(); g.roundRect(-300, -690, 600, 420, 50); g.fill(); g.stroke();
+g.shadowColor = '#7FE3FF'; g.shadowBlur = 70; g.fillStyle = '#BFF4FF'; [-120, 120].forEach((x) => { g.beginPath(); g.arc(x, -480, 78, 0, 7); g.fill(); }); g.shadowBlur = 0; g.fillStyle = '#1F5E7A'; [-120, 120].forEach((x) => { g.beginPath(); g.arc(x + 14, -470, 30, 0, 7); g.fill(); });
+g.restore();
+// TOMAS (left, shocked, listening)
+g.save(); g.translate(-170, 2230); g.scale(2.8, 2.8);
+drawToon(g, { body: '#F28C28', hat: 'beanie', hatCol: '#1E2230', extra: ['freckles'] }, { mood: 'shock', look: [0.7, -0.5], talk: 0.7, sweat: 1, armR: [60, 40], armL: [14, 10] });
+g.restore();
+// vignette
+gr = g.createRadialGradient(W / 2, H * 0.5, H * 0.3, W / 2, H * 0.5, H * 0.78); gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(10,5,30,0.6)'); g.fillStyle = gr; g.fillRect(0, 0, W, H);
+const word = (s, x, y, size, fill, glow, rot) => { g.save(); g.translate(x, y); g.rotate(rot); g.font = `900 ${size}px Inter`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.lineJoin = 'round';
+  g.fillStyle = 'rgba(0,0,0,0.5)'; g.fillText(s, 14, 30); g.lineWidth = size * 0.2; g.strokeStyle = '#0B0B14'; g.strokeText(s, 0, 0); if (glow) { g.shadowColor = glow; g.shadowBlur = 60; } g.fillStyle = fill; g.fillText(s, 0, 0); g.restore(); };
+const fit = (s, size, maxW) => { g.font = `900 ${size}px Inter`; return Math.min(size, size * maxW / g.measureText(s).width); };
+word('A DEAD BASE', W / 2, 470, fit('A DEAD BASE', 330, 1950), '#FFFFFF', '#E3B8FF', -0.03);
+word('JUST CALLED US', W / 2, 830, fit('JUST CALLED US', 340, 1950), '#C77DFF', null, -0.03);
+const pill = (txt, x, y, bg, rot, size, fg = '#FFFFFF') => { g.save(); g.translate(x, y); g.rotate(rot); g.font = `900 ${size}px Inter`; const w = g.measureText(txt).width + 110; g.fillStyle = bg; g.strokeStyle = '#0B0B14'; g.lineWidth = 12; g.beginPath(); g.roundRect(-w / 2, -size * 0.8, w, size * 1.6, 28); g.fill(); g.stroke(); g.fillStyle = fg; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText(txt, 0, 6); g.restore(); };
+pill('AIR 7', 330, 140, '#E63946', -0.05, 84); pill('PART 4', 1850, 140, '#FFD43B', 0.05, 84, '#0B0B14');
+document.title = 'DONE';
+</script></body></html>
