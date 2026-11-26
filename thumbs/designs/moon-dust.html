@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Poppins;font-weight:700;src:url(fonts/Poppins-Bold.ttf)}
+html,body{margin:0;background:#000}canvas{display:block;width:1080px;height:1920px}</style></head><body><canvas id="c"></canvas>
+<script src="lib.js"></script><script src="chars.js"></script><script src="env.js"></script><script src="env2.js"></script><script src="env3.js"></script>
+<script>
+const C = (a, b) => Object.assign({}, a, b);
+(async()=>{
+await document.fonts.load('700 100px Poppins');
+const c=document.getElementById('c'); c.width=2160; c.height=3840; const g=c.getContext('2d'); g.scale(2,2);
+const cam={x:540,y:960,z:1,r:0};
+moonBG(g,0,cam,{hy:640,ex:940,ey:520,er:100}); applyCam(g,cam,1); g.setTransform(2,0,0,2,0,0); g.fillStyle='#8f8ba3'; g.fillRect(0,1650,1080,300);
+// glow + rays behind the hero letters
+g.save(); g.globalCompositeOperation='screen';
+let gr=g.createRadialGradient(640,880,40,640,880,760); gr.addColorStop(0,'rgba(255,230,120,.85)'); gr.addColorStop(.4,'rgba(255,200,90,.35)'); gr.addColorStop(1,'rgba(255,200,90,0)'); g.fillStyle=gr; g.fillRect(0,0,1080,1920);
+g.translate(640,880); for(let i=0;i<16;i++){g.rotate(TAU/16); g.fillStyle='rgba(255,240,170,.11)'; g.beginPath(); g.moveTo(0,0); g.lineTo(-60,-1500); g.lineTo(60,-1500); g.fill();} g.restore();
+// hero: giant letters in the dust, with a glowing outline
+g.save(); g.shadowColor='#ffd23a'; g.shadowBlur=60; dustLetters(g,['MAX IS','COOL'],640,860,230,1); g.restore();
+dustLetters(g,['MAX IS','COOL'],640,860,230,1);
+noWrite(g,830,1420,200);
+for(const [x,y,r] of [[250,700,60],[1000,780,70],[960,1120,46],[560,1130,40]]) sparkle(g,x,y,r,1);
+// big face: Max, shocked
+const mo={x:260,y:2050,s:940,lean:-.03,shadow:false,face:{eyes:'wide',mouth:'o',look:[.8,-.8],browAng:-.3,browUp:1},arms:{L:[.3,-.1],R:[.3,-.1]}};
+drawStick(g,C({cols:PAL.blue,hat:'bandana',hatCol:'#ff7a2f',dotCol:'#fff'},mo));
+const h=loc(mo,0,-.765); helmet(g,h[0],h[1],mo.s*.235);
+sweat(g,h[0]+230,h[1]-60,55,1);
+// vignette
+gr=g.createRadialGradient(540,960,600,540,960,1300); gr.addColorStop(0,'rgba(0,0,20,0)'); gr.addColorStop(1,'rgba(0,0,20,.5)'); g.fillStyle=gr; g.fillRect(0,0,1080,1920);
+// text lines
+text(g,"DON'T WRITE",540,215,150,'#fff','#0b0b14',34); g.save(); g.shadowColor='#ff5a5a'; g.shadowBlur=40; text(g,"DON'T WRITE",540,215,150,'#fff','#0b0b14',0); g.restore();
+text(g,"IN THE DUST?!",540,395,128,'#ffd43b','#0b0b14',32); text(g,"IN THE DUST?!",540,395,128,'#ffd43b','#0b0b14',0);
+// sticker
+g.save(); g.translate(170,560); g.rotate(-.1); rrect(g,-130,-44,260,88,24); fillStroke(g,'#e63946',8,'#0b0b14'); text(g,'SCI-FI',0,3,56,'#fff','#0b0b14',0); g.restore();
+document.title='DONE';
+})();
+</script></body></html>
